@@ -4,6 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
+import java.util.Objects;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Sighting {
@@ -23,6 +25,7 @@ public class Sighting {
 
     @NotNull(message = "Sighting must have a date.")
     @Past(message = "Sighting cannot be in the future.")
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
     @Column
     private LocalDate date;
 
@@ -66,4 +69,48 @@ public class Sighting {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 13 * hash + this.id;
+        hash = 13 * hash + Objects.hashCode(this.hero);
+        hash = 13 * hash + Objects.hashCode(this.location);
+        hash = 13 * hash + Objects.hashCode(this.date);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Sighting other = (Sighting) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.hero, other.hero)) {
+            return false;
+        }
+        if (!Objects.equals(this.location, other.location)) {
+            return false;
+        }
+        if (!Objects.equals(this.date, other.date)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Sighting{" + "id=" + id + ", hero=" + hero + ", location=" + location + ", date=" + date + '}';
+    }
+    
+    
 }

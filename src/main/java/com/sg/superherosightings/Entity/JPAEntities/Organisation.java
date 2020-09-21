@@ -22,9 +22,10 @@ public class Organisation {
     @Column
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "location_id", nullable = false)
     @Size(max = 100, message = "Address cannot exceed 100 characters.")
-    @Column
-    private String address;
+    private Location location;
 
     @Size(max = 12, message = "Telephone number cannot exceed 12 characters.")
     @Column
@@ -39,11 +40,11 @@ public class Organisation {
 
     public Organisation(){}
 
-    public Organisation(int id, String name, String description, String address, String telephone, Set<Hero> members) {
+    public Organisation(int id, String name, String description, Location location, String telephone, Set<Hero> members) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.address = address;
+        this.location = location;
         this.telephone = telephone;
         this.members = members;
     }
@@ -72,13 +73,15 @@ public class Organisation {
         this.description = description;
     }
 
-    public String getAddress() {
-        return address;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setLocation(Location location) {
+        this.location = location;
     }
+
+    
 
     public String getTelephone() {
         return telephone;
@@ -104,14 +107,14 @@ public class Organisation {
         return id == that.id &&
                 name.equals(that.name) &&
                 description.equals(that.description) &&
-                address.equals(that.address) &&
+                location.equals(that.location) &&
                 telephone.equals(that.telephone) &&
                 Objects.equals(members, that.members);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, address, telephone, members);
+        return Objects.hash(id, name, description, location, telephone, members);
     }
 
     @Override
@@ -120,7 +123,7 @@ public class Organisation {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", address='" + address + '\'' +
+                ", location='" + location + '\'' +
                 ", telephone='" + telephone + '\'' +
                 ", members=" + members +
                 '}';

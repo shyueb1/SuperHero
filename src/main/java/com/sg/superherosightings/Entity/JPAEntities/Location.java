@@ -4,6 +4,9 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Objects;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 @Entity
 public class Location {
@@ -25,9 +28,15 @@ public class Location {
     @Column
     private String address;
 
+    @Digits(integer = 2, fraction = 4, message = "Latitude must have precision of 6 with 4 decimal places")
+    @Min(value = -90, message = "Latitude must be no less than -90 degrees")
+    @Max(value = 90, message = "Latitude must be no more than 90 degrees")
     @Column
     private double latitude;
 
+    @Digits(integer = 3, fraction = 4, message = "Longitude must have precision of 7 with 4 decimal places")
+    @Min(value = -180, message = "Longitude must be no less than -180 degrees")
+    @Max(value = 180, message = "Longitude must be no more than 180 degrees")
     @Column
     private double longitude;
 

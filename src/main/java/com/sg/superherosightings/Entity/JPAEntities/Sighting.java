@@ -6,7 +6,7 @@ import javax.validation.constraints.Past;
 import java.time.LocalDate;
 
 @Entity
-public class HeroSighting {
+public class Sighting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int id;
@@ -26,9 +26,9 @@ public class HeroSighting {
     @Column
     private LocalDate date;
 
-    public HeroSighting(){}
+    public Sighting(){}
 
-    public HeroSighting(int id, @NotNull Hero hero, @NotNull Location location, @NotNull @Past LocalDate date) {
+    public Sighting(int id, @NotNull Hero hero, @NotNull Location location, @NotNull @Past LocalDate date) {
         this.id = id;
         this.hero = hero;
         this.location = location;

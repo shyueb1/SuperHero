@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface HeroRepository extends JpaRepository<Hero, Integer> {
     List<Hero> findAll();
+    List<Hero> findByOrganisation(Organisation organisation);
 }

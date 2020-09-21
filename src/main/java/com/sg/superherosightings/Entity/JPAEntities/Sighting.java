@@ -25,7 +25,7 @@ public class Sighting {
 
     @NotNull(message = "Sighting must have a date.")
     @Past(message = "Sighting cannot be in the future.")
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column
     private LocalDate date;
 

@@ -1,15 +1,15 @@
 /target/
 target/
 superheroreact/nbproject/
-superheroreact//node_modules
+superheroreact/node_modules
 superheroreact/.pnp
 superheroreact/.pnp.js
 
 # testing
-superheroreact//coverage
+superheroreact/coverage
 
 # production
-superheroreact//build
+superheroreact/build
 
 # misc
 superheroreact/.DS_Store

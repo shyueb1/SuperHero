@@ -16,7 +16,7 @@ CREATE TABLE organisation (
     name varchar(30) NOT NULL,
     description varchar(250) NOT NULL,
     location_id int,
-    telephone_no varchar(12),
+    telephone varchar(12),
     CONSTRAINT unique_org_name UNIQUE (name),
     CONSTRAINT fk_location_organisation FOREIGN KEY (location_id) REFERENCES location(id)
 );

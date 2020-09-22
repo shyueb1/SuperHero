@@ -4,7 +4,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class Superpower {
@@ -21,8 +20,6 @@ public class Superpower {
     @Size(max = 250, message = "Description cannot exceed 250 characters.")
     @Column
     private String description;
-
-
 
     public Superpower(){}
 

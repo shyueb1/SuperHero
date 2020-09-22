@@ -5,10 +5,12 @@ import com.sg.superherosightings.Entity.JPAEntities.Location;
 import com.sg.superherosightings.Entity.JPAEntities.Sighting;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Repository
 public interface SightingRepository extends JpaRepository<Sighting, Integer> {
 
     List<Hero> findByLocation(Location location);

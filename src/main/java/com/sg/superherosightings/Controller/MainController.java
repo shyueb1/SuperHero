@@ -23,27 +23,27 @@ public class MainController {
 
     //GET endpoints
 
-    @GetMapping("/hero/viewall")
+    @GetMapping("/hero")
     public ResponseEntity<List<Hero>> getAllHeroes(){
         return new ResponseEntity<>(service.getAllHeroes(), HttpStatus.OK);
     }
 
-    @GetMapping("/superpower/viewall")
+    @GetMapping("/superpower")
     public ResponseEntity<List<SuperPower>> getAllSuperPowers(){
         return new ResponseEntity<>(service.getAllSuperPowers(), HttpStatus.OK);
     }
 
-    @GetMapping("/location/viewall")
+    @GetMapping("/location")
     public ResponseEntity<List<Location>> getAllLocations(){
         return new ResponseEntity<>(service.getAllLocations(), HttpStatus.OK);
     }
 
-    @GetMapping("/organisation/viewall")
+    @GetMapping("/organisation")
     public ResponseEntity<List<Organisation>> getAllOrganisations(){
         return new ResponseEntity<>(service.getAllOrganisations(), HttpStatus.OK);
     }
 
-    @GetMapping("/sightings/viewall")
+    @GetMapping("/sightings")
     public ResponseEntity<List<Sighting>> getAllSightings(){
         return new ResponseEntity<>(service.getAllSightings(), HttpStatus.OK);
     }
@@ -51,34 +51,34 @@ public class MainController {
     //POST endpoints
 
     @PostMapping("/hero")
-    public ResponseEntity<Object> addOrUpdateHero(Hero hero){
+    public ResponseEntity<Object> addOrUpdateHero(@RequestBody Hero hero){
         return new ResponseEntity<>(service.addOrUpdateHero(hero), HttpStatus.OK);
     }
 
     @PostMapping("/superpower")
-    public ResponseEntity<Object> addOrUpdateSuperPower(SuperPower superPower){
+    public ResponseEntity<Object> addOrUpdateSuperPower(@RequestBody SuperPower superPower){
         return new ResponseEntity<>(service.addOrUpdateSuperPower(superPower), HttpStatus.OK);
     }
 
     @PostMapping("/location")
-    public ResponseEntity<Object> addOrUpdateLocation(Location location){
+    public ResponseEntity<Object> addOrUpdateLocation(@RequestBody Location location){
         return new ResponseEntity<>(service.addOrUpdateLocation(location), HttpStatus.OK);
     }
 
     @PostMapping("/organisation")
-    public ResponseEntity<Object> addOrUpdateOrganisation(Organisation organisation){
+    public ResponseEntity<Object> addOrUpdateOrganisation(@RequestBody Organisation organisation){
         return new ResponseEntity<>(service.addOrUpdateOrganisation(organisation), HttpStatus.OK);
     }
 
     @PostMapping("/sightings")
-    public ResponseEntity<Object> addOrUpdateSighting(Sighting sighting){
+    public ResponseEntity<Object> addOrUpdateSighting(@RequestBody Sighting sighting){
         return new ResponseEntity<>(service.addOrUpdateSightings(sighting), HttpStatus.OK);
     }
 
     //DELETE endpoints
 
     @DeleteMapping("/hero")
-    public ResponseEntity<Object> deleteHero(Hero hero){
+    public ResponseEntity<Object> deleteHero(@RequestBody Hero hero){
         HashMap<String, String> jsonResponse = new HashMap<>();
         jsonResponse.put("successful", "true");
         service.deleteHero(hero);
@@ -86,7 +86,8 @@ public class MainController {
     }
 
     @DeleteMapping("/superpower")
-    public ResponseEntity<Object> deleteSuperPowers(SuperPower superPower){
+    public ResponseEntity<Object> deleteSuperPowers(@RequestBody SuperPower superPower){
+        System.out.println(superPower.toString());
         HashMap<String, String> jsonResponse = new HashMap<>();
         jsonResponse.put("successful", "true");
         service.deleteSuperPower(superPower);
@@ -94,7 +95,7 @@ public class MainController {
     }
 
     @DeleteMapping("/location")
-    public ResponseEntity<Object> deleteLocation(Location location){
+    public ResponseEntity<Object> deleteLocation(@RequestBody Location location){
         HashMap<String, String> jsonResponse = new HashMap<>();
         jsonResponse.put("successful", "true");
         service.deleteLocation(location);
@@ -102,7 +103,7 @@ public class MainController {
     }
 
     @DeleteMapping("/organisation")
-    public ResponseEntity<Object> deleteOrganisation(Organisation organisation){
+    public ResponseEntity<Object> deleteOrganisation(@RequestBody Organisation organisation){
         HashMap<String, String> jsonResponse = new HashMap<>();
         jsonResponse.put("successful", "true");
         service.deleteOrganisation(organisation);
@@ -110,7 +111,7 @@ public class MainController {
     }
 
     @DeleteMapping("/sightings")
-    public ResponseEntity<Object> deleteSighting(Sighting sighting){
+    public ResponseEntity<Object> deleteSighting(@RequestBody Sighting sighting){
         HashMap<String, String> jsonResponse = new HashMap<>();
         jsonResponse.put("successful", "true");
         service.deleteSighting(sighting);

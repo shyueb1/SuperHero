@@ -22,16 +22,11 @@ public class Hero {
     @Column
     private String description;
 
-//    @NotBlank(message = "Hero must have a superpower")
-//    @Size(max = 30, message = "Superpower cannot exceed 30 characters.")
-//    @Column
-//    private String superpower;
-
     @Column
     private boolean isVillain;
 
     @ManyToOne
-    @JoinColumn(name = "superpower_id", nullable = false)
+    @JoinColumn(name = "superpower_id")
     private SuperPower superpower;
 
     @ManyToMany(mappedBy = "members")

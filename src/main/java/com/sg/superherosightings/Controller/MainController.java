@@ -3,6 +3,7 @@ package com.sg.superherosightings.Controller;
 import com.sg.superherosightings.Entity.JPAEntities.*;
 import com.sg.superherosightings.Service.ServiceLayerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,27 +24,27 @@ public class MainController {
 
     @GetMapping("/hero/viewall")
     public ResponseEntity<List<Hero>> getAllHeroes(){
-        throw new UnsupportedOperationException();
+        return new ResponseEntity<>(service.getAllHeroes(), HttpStatus.OK);
     }
 
     @GetMapping("/superpower/viewall")
     public ResponseEntity<List<SuperPower>> getAllSuperPowers(){
-        throw new UnsupportedOperationException();
+        return new ResponseEntity<>(service.getAllSuperPowers(), HttpStatus.OK);
     }
 
     @GetMapping("/location/viewall")
     public ResponseEntity<List<Location>> getAllLocations(){
-        throw new UnsupportedOperationException();
+        return new ResponseEntity<>(service.getAllLocations(), HttpStatus.OK);
     }
 
     @GetMapping("/organisation/viewall")
     public ResponseEntity<List<Organisation>> getAllOrganisations(){
-        throw new UnsupportedOperationException();
+        return new ResponseEntity<>(service.getAllOrganisations(), HttpStatus.OK);
     }
 
     @GetMapping("/sightings/viewall")
     public ResponseEntity<List<Sighting>> getAllSightings(){
-        throw new UnsupportedOperationException();
+        return new ResponseEntity<>(service.getAllSightings(), HttpStatus.OK);
     }
 
     //DELETE endpoints
@@ -99,4 +100,6 @@ public class MainController {
     public ResponseEntity<Object> addOrUpdateSuperPower(Sighting sighting){
         throw new UnsupportedOperationException();
     }
+
+
 }

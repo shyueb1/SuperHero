@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
-public class Superpower {
+public class SuperPower {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private int id;
@@ -21,9 +21,9 @@ public class Superpower {
     @Column
     private String description;
 
-    public Superpower(){}
+    public SuperPower(){}
 
-    public Superpower(int id, String name, String description) {
+    public SuperPower(int id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -57,7 +57,7 @@ public class Superpower {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Superpower that = (Superpower) o;
+        SuperPower that = (SuperPower) o;
         return id == that.id &&
                 name.equals(that.name) &&
                 description.equals(that.description);

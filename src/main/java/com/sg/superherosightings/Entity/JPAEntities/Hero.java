@@ -32,14 +32,14 @@ public class Hero {
 
     @ManyToOne
     @JoinColumn(name = "superpower_id", nullable = false)
-    private Superpower superpower;
+    private SuperPower superpower;
 
     @ManyToMany(mappedBy = "members")
     private Set<Organisation> inOrganisation;
 
     public Hero(){}
 
-    public Hero(int id, String name, String description, Superpower superpower, boolean isVillain, Set<Organisation> inOrganisation) {
+    public Hero(int id, String name, String description, SuperPower superpower, boolean isVillain, Set<Organisation> inOrganisation) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -72,11 +72,11 @@ public class Hero {
         this.description = description;
     }
 
-    public Superpower getSuperpower() {
+    public SuperPower getSuperpower() {
         return superpower;
     }
 
-    public void setSuperpower(Superpower superpower) {
+    public void setSuperpower(SuperPower superpower) {
         this.superpower = superpower;
     }
 

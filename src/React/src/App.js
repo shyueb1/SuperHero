@@ -52,19 +52,23 @@ class App extends React.Component {
           </Col>
         </Row>
         <Modal.Footer>
-          <Row>
-            <Col sm={2} className="text-center">
-              {/* <Link href="#aboutus">About Us</Link> */}
-            </Col>
-            <Col sm={2} className="text-center">
-              {/* <Link href="#faqs">FAQs</Link> */}
-            </Col>
-            <Col sm={8}>
+          <Nav fill>
+            <Nav.Item>
+              <Nav.Link href="#aboutus">About Us</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="#faqs">FAQs</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
               <Icon.Facebook />
+            </Nav.Item>
+            <Nav.Item>
               <Icon.Instagram />
+            </Nav.Item>
+            <Nav.Item>
               <Icon.Twitter />
-            </Col>
-          </Row>
+            </Nav.Item>
+          </Nav>
         </Modal.Footer>
 
       </Container>

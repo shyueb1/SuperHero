@@ -2,8 +2,8 @@
 target/
 superheroreact/nbproject/
 superheroreact//node_modules
-/.pnp
-.pnp.js
+superheroreact/.pnp
+superheroreact/.pnp.js
 
 # testing
 superheroreact//coverage
@@ -12,12 +12,12 @@ superheroreact//coverage
 superheroreact//build
 
 # misc
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+superheroreact/.DS_Store
+superheroreact/.env.local
+superheroreact/.env.development.local
+superheroreact/.env.test.local
+superheroreact/.env.production.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+superheroreact/npm-debug.log*
+superheroreact/yarn-debug.log*
+superheroreact/yarn-error.log*

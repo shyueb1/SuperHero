@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ServiceLayerImpl {
+public class ServiceLayerImpl implements ServiceLayer{
 
     private HeroRepository heroRepo;
     private SuperPowerRepository powerRepo;
@@ -61,9 +61,11 @@ public class ServiceLayerImpl {
     public Location addOrUpdateLocation(Location location){
         return locationRepo.save(location);
     }
+
     public Organisation addOrUpdateOrganisation(Organisation organisation){
         return orgRepo.save(organisation);
     }
+
     public Sighting addOrUpdateSightings(Sighting sighting){
         return sightRepo.save(sighting);
     }

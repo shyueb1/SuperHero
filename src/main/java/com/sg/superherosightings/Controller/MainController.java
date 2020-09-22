@@ -23,27 +23,27 @@ public class MainController {
 
     //GET endpoints
 
-    @GetMapping("/hero/viewall")
+    @GetMapping("/hero")
     public ResponseEntity<List<Hero>> getAllHeroes(){
         return new ResponseEntity<>(service.getAllHeroes(), HttpStatus.OK);
     }
 
-    @GetMapping("/superpower/viewall")
+    @GetMapping("/superpower")
     public ResponseEntity<List<SuperPower>> getAllSuperPowers(){
         return new ResponseEntity<>(service.getAllSuperPowers(), HttpStatus.OK);
     }
 
-    @GetMapping("/location/viewall")
+    @GetMapping("/location")
     public ResponseEntity<List<Location>> getAllLocations(){
         return new ResponseEntity<>(service.getAllLocations(), HttpStatus.OK);
     }
 
-    @GetMapping("/organisation/viewall")
+    @GetMapping("/organisation")
     public ResponseEntity<List<Organisation>> getAllOrganisations(){
         return new ResponseEntity<>(service.getAllOrganisations(), HttpStatus.OK);
     }
 
-    @GetMapping("/sightings/viewall")
+    @GetMapping("/sightings")
     public ResponseEntity<List<Sighting>> getAllSightings(){
         return new ResponseEntity<>(service.getAllSightings(), HttpStatus.OK);
     }

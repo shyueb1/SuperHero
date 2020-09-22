@@ -58,4 +58,18 @@ public class HeroRepoTest {
 //        System.out.println(newOrg.toString());
         System.out.println(Arrays.toString(heroRepo.findByOrganisation(org).toArray()));
     }
+
+    @Test
+    public void findAllHeroesByLocationTest(){
+        Location loc = new Location();
+        loc.setAddress("some address");
+        loc.setDescription("some loc description");
+        loc.setLatitude(12.0);
+        loc.setLongitude(45.0);
+        loc.setName("location name");
+
+        System.out.println(Arrays.toString(sightRepo.findByLocation(loc).toArray()));
+    }
+
+
 }

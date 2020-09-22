@@ -12,7 +12,7 @@ public class Superpower {
     @Id
     private int id;
 
-    @NotBlank(message = "Organisation must have a name.")
+    @NotBlank(message = "Superpower must have a name.")
     @Size(max = 30, message = "Name cannot exceed 30 characters.")
     @Column
     private String name;
@@ -21,6 +21,8 @@ public class Superpower {
     @Size(max = 250, message = "Description cannot exceed 250 characters.")
     @Column
     private String description;
+
+
 
     public Superpower(){}
 

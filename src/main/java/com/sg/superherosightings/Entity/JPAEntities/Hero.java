@@ -22,20 +22,24 @@ public class Hero {
     @Column
     private String description;
 
-    @NotBlank(message = "Hero must have a superpower")
-    @Size(max = 30, message = "Superpower cannot exceed 30 characters.")
-    @Column
-    private String superpower;
+//    @NotBlank(message = "Hero must have a superpower")
+//    @Size(max = 30, message = "Superpower cannot exceed 30 characters.")
+//    @Column
+//    private String superpower;
 
     @Column
     private boolean isVillain;
+
+    @ManyToOne
+    @JoinColumn(name = "superpower_id", nullable = false)
+    private Superpower superpower;
 
     @ManyToMany(mappedBy = "members")
     private Set<Organisation> inOrganisation;
 
     public Hero(){}
 
-    public Hero(int id, String name, String description, String superpower, boolean isVillain, Set<Organisation> inOrganisation) {
+    public Hero(int id, String name, String description, Superpower superpower, boolean isVillain, Set<Organisation> inOrganisation) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -68,11 +72,11 @@ public class Hero {
         this.description = description;
     }
 
-    public String getSuperpower() {
+    public Superpower getSuperpower() {
         return superpower;
     }
 
-    public void setSuperpower(String superpower) {
+    public void setSuperpower(Superpower superpower) {
         this.superpower = superpower;
     }
 

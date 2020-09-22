@@ -12,13 +12,20 @@ CREATE TABLE organisation (
     CONSTRAINT fk_location_organisation FOREIGN KEY (location_id) REFERENCES location(id)
 );
 
+CREATE TABLE superpower(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    name varchar(30) NOT NULL,
+    description varchar(250) NOT NULL
+);
+
 CREATE TABLE hero (
     id int AUTO_INCREMENT PRIMARY KEY,
     name varchar(30) NOT NULL,
     description varchar(250) NOT NULL,
-    superpower varchar(30) NOT NULL,
+    superpower int NOT NULL,
     is_villain boolean NOT NULL,
-    CONSTRAINT unique_name_superpower UNIQUE (name, superpower)
+    CONSTRAINT unique_name_superpower UNIQUE (name, superpower),
+    CONSTRAINT fk_superpower_hero FOREIGN KEY (superpower_id) REFERENCES superpower(id)
 );
 
 CREATE TABLE hero_in_organisation(

@@ -31,7 +31,7 @@ CREATE TABLE hero (
     id int AUTO_INCREMENT PRIMARY KEY,
     name varchar(30) NOT NULL,
     description varchar(250) NOT NULL,
-    superpower_id int NOT NULL,
+    superpower_id int,
     is_villain boolean NOT NULL,
     CONSTRAINT unique_name_superpower UNIQUE (name, superpower_id),
     CONSTRAINT fk_superpower_hero FOREIGN KEY (superpower_id) REFERENCES super_power(id)

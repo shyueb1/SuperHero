@@ -17,6 +17,6 @@ public interface SightingRepository extends JpaRepository<Sighting, Integer> {
     List<Location> findByHero(Hero hero);
     List<Sighting> findByDate(LocalDate date);
 
-    @Query (value = "SELECT * FROM Sighting ORDER BY date DESC LIMIT 10", nativeQuery = true)
-    List<Sighting> findTenRecentSightings();
+//    @Query (value = "SELECT * FROM Sighting ORDER BY date DESC LIMIT 10", nativeQuery = true)
+//    List<Sighting> findTenRecentSightings();
 }

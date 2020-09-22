@@ -9,5 +9,5 @@ import java.util.List;
 
 @Repository
 public interface OrganisationRepository extends JpaRepository<Organisation, Integer> {
-    List<Organisation> findByHero(Hero hero);
+//    List<Organisation> findByHero(int hero_id);
 }

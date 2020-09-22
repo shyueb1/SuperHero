@@ -21,7 +21,7 @@ CREATE TABLE organisation (
     CONSTRAINT fk_location_organisation FOREIGN KEY (location_id) REFERENCES location(id)
 );
 
-CREATE TABLE superpower(
+CREATE TABLE super_power(
     id int AUTO_INCREMENT PRIMARY KEY,
     name varchar(30) NOT NULL,
     description varchar(250) NOT NULL
@@ -34,7 +34,7 @@ CREATE TABLE hero (
     superpower_id int NOT NULL,
     is_villain boolean NOT NULL,
     CONSTRAINT unique_name_superpower UNIQUE (name, superpower_id),
-    CONSTRAINT fk_superpower_hero FOREIGN KEY (superpower_id) REFERENCES superpower(id)
+    CONSTRAINT fk_superpower_hero FOREIGN KEY (superpower_id) REFERENCES super_power(id)
 );
 
 CREATE TABLE hero_in_organisation(

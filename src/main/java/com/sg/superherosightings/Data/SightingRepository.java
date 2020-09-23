@@ -25,4 +25,11 @@ public interface SightingRepository extends JpaRepository<Sighting, Integer> {
 
     @Query(value = "SELECT * FROM sighting ORDER BY date DESC LIMIT 10", nativeQuery = true)
     List<Sighting> findTenRecentSightings();
+
+    @Query(value = "UPDATE sighting SET location_id=null WHERE id=:#{#sighting.id}", nativeQuery = true)
+    void deleteLocationFromSighting(@Param("sighting") Sighting sight);
+
+    @Query(value = "UPDATE sighting SET location_id=:#{#location.id} WHERE id=:#{#sighting.id}", nativeQuery = true)
+    void addLocationToSighting(@Param("sighting") Sighting sight, @Param("location") Location location);
 }
+

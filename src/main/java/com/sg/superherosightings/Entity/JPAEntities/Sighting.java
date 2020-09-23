@@ -18,9 +18,8 @@ public class Sighting {
     @JoinColumn(name = "hero_id", nullable = false)
     private Hero hero;
 
-    @NotNull(message = "Sighting must have a location.")
     @ManyToOne
-    @JoinColumn(name = "location_id", nullable = false)
+    @JoinColumn(name = "location_id")
     private Location location;
 
     @NotNull(message = "Sighting must have a date.")

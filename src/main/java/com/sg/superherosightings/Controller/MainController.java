@@ -48,6 +48,12 @@ public class MainController {
         return new ResponseEntity<>(service.getAllSightings(), HttpStatus.OK);
     }
 
+    @GetMapping("/sightings")
+    public ResponseEntity<List<Sighting>> getTop10Sightings(){
+        return new ResponseEntity<>(service.getAllSightings(), HttpStatus.OK);
+    }
+
+
     //POST endpoints
 
     @PostMapping("/hero")
@@ -74,6 +80,33 @@ public class MainController {
     public ResponseEntity<Object> addOrUpdateSighting(@RequestBody Sighting sighting){
         return new ResponseEntity<>(service.addOrUpdateSightings(sighting), HttpStatus.OK);
     }
+
+    //POST add existing
+
+    @PostMapping("/hero/organisation")
+    public ResponseEntity<Object> addOrganisationToHero(@RequestBody Hero hero, @RequestBody Organisation organisation){
+        HashMap<String, String> jsonResponse = new HashMap<>();
+        jsonResponse.put("successful", "true");
+        service.addHeroToOrganisation(hero, organisation);
+        return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/hero/superpower")
+    public ResponseEntity<Object> addSuperPowerToHero(@RequestBody Hero hero, @RequestBody SuperPower power){
+        HashMap<String, String> jsonResponse = new HashMap<>();
+        jsonResponse.put("successful", "true");
+        service.addSuperPowerToHero(power, hero);
+        return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/sighting/location")
+    public ResponseEntity<Object> addLocationToSighting(@RequestBody Location location, @RequestBody Sighting sighting){
+        HashMap<String, String> jsonResponse = new HashMap<>();
+        jsonResponse.put("successful", "true");
+        service.addLocationToSighting(location, sighting);
+        return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
+    }
+
 
     //DELETE endpoints
 
@@ -118,5 +151,30 @@ public class MainController {
         return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
     }
 
+    //DELETE from existing
+
+    @DeleteMapping("/hero/organisation")
+    public ResponseEntity<Object> deleteHeroFromOrganisation(@RequestBody Hero hero, @RequestBody Organisation organisation){
+        HashMap<String, String> jsonResponse = new HashMap<>();
+        jsonResponse.put("successful", "true");
+        service.deleteHeroFromOrganisation(hero, organisation);
+        return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/hero/superpower")
+    public ResponseEntity<Object> deleteSuperPowerFromHero(@RequestBody Hero hero){
+        HashMap<String, String> jsonResponse = new HashMap<>();
+        jsonResponse.put("successful", "true");
+        service.deleteSuperPowerFromHero(hero);
+        return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/sighting/location")
+    public ResponseEntity<Object> deleteLocationFromSighting(@RequestBody Sighting sighting){
+        HashMap<String, String> jsonResponse = new HashMap<>();
+        jsonResponse.put("successful", "true");
+        service.deleteLocationFromSighting(sighting);
+        return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
+    }
 
 }

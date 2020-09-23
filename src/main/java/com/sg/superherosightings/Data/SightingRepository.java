@@ -23,7 +23,7 @@ public interface SightingRepository extends JpaRepository<Sighting, Integer> {
     @Query(value = "SELECT * FROM sighting WHERE sighting.date_of_sighting = :#{#date}", nativeQuery = true)
     List<Sighting> findByDate(@Param("date") LocalDate date);
 
-    @Query(value = "SELECT * FROM sighting ORDER BY date DESC LIMIT 10", nativeQuery = true)
+    @Query(value = "SELECT * FROM sighting ORDER BY date_of_sighting DESC LIMIT 10", nativeQuery = true)
     List<Sighting> findTenRecentSightings();
 
     @Query(value = "UPDATE sighting SET location_id=null WHERE id=:#{#sighting.id}", nativeQuery = true)

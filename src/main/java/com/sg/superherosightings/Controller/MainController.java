@@ -77,7 +77,7 @@ public class MainController {
 
     @GetMapping("/sighting/top10")
     public ResponseEntity<List<Sighting>> getTop10Sightings(){
-        return new ResponseEntity<>(service.getAllSightings(), HttpStatus.OK);
+        return new ResponseEntity<>(service.getTenLatestSightings(), HttpStatus.OK);
     }
 
 

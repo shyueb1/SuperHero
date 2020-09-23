@@ -1,31 +1,68 @@
-import React from 'react';
-import './App.css';
-import { Container, Row, Col, Jumbotron, Modal, Nav, Navbar } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import * as Icon from 'react-feather';
-import NewsFeed from './components/NewsFeed';
+import React from "react";
+import "./App.css";
+import {
+  Container,
+  Row,
+  Col,
+  Jumbotron,
+  Modal,
+  Nav,
+  Card,
+} from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import * as Icon from "react-feather";
+import NewsFeed from "./components/NewsFeed.js";
 
 //const SERVICE_URL = "";
 
 class App extends React.Component {
   state = {
-    sightings: [],
-
-  }
+    sightings: [
+      {
+        id: 1,
+        hero: "Superman",
+        location: "29 Wall Street",
+        date: "2020-02-02",
+      },
+      {
+        id: 1,
+        hero: "Superman",
+        location: "29 Wall Street",
+        date: "2020-02-02",
+      },
+      {
+        id: 1,
+        hero: "Superman",
+        location: "29 Wall Street",
+        date: "2020-02-02",
+      },
+      {
+        id: 1,
+        hero: "Superman",
+        location: "29 Wall Street",
+        date: "2020-02-02",
+      },
+    ],
+  };
 
   render() {
     return (
       <Container fluid style={{ padding: 0 }}>
+        {/* <Container fluid> */}
         <Row>
           <Col>
-            <Jumbotron fluid >
-              <h1 className="text-center" style={{ fontSize: 100 }}>Superhero and Supervillain Sightings</h1>
+            <Jumbotron fluid style={{ padding: 0 }}>
+              <h1 className="text-center" style={{ fontSize: 100 }}>
+                Superhero and Supervillain Sightings
+              </h1>
               <p className="text-center">A brief intro to this web app</p>
             </Jumbotron>
           </Col>
         </Row>
+
         <Row>
-          <Col sm={2}>
+          <Col sm={3}>
+            <br />
             <Nav defaultActiveKey="#home" className="flex-column">
               <Nav.Item>
                 <Nav.Link href="#home">Home</Nav.Link>
@@ -47,10 +84,13 @@ class App extends React.Component {
               </Nav.Item>
             </Nav>
           </Col>
-          <Col sm={10}>
-            <NewsFeed />
+
+          <Col sm={9}>
+            <h3 className="text-center">Latest Sightings</h3>
+            <NewsFeed sightings={this.state.sightings} />
           </Col>
         </Row>
+
         <Modal.Footer>
           <Nav fill>
             <Nav.Item>
@@ -70,11 +110,9 @@ class App extends React.Component {
             </Nav.Item>
           </Nav>
         </Modal.Footer>
-
       </Container>
     );
   }
-
 }
 
 export default App;

@@ -5,8 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Sidebar from "../components/Sidebar";
-// import SuperpowerForm from "../components/AddSuperpowerForm";
-// import SuperpowerTable from "../components/TableSuperpower";
+import SuperpowerForm from "../components/AddLocationForm";
+import SuperpowerTable from "../components/AddLocationTable";
 
 const SERVICE_URL = "http://localhost:8090";
 
@@ -18,6 +18,11 @@ class Superpower extends Component {
                 id: 1,
                 name: "Invisible",
                 description: "Can be invisible for an hour without break",
+            },
+            {
+                id: 2,
+                name: "Fake",
+                description: "Fake fake",
             },
         ],
     };
@@ -35,10 +40,16 @@ class Superpower extends Component {
             .then((data) => this.setState({ superpowers: data, isLoading: false }));
     }
 
+    handleEditModalOpen = (event) => {
+        console.log("Opening Edit Modal");
+        if (event) event.preventDefault();
+
+        let id = event.target.value;
+    };
+
     render() {
         return (
             <Container fluid style={{ padding: 0 }}>
-                {/* <Container fluid> */}
                 <Header />
 
                 <Row>
@@ -48,10 +59,10 @@ class Superpower extends Component {
 
                     <Col sm={9}>
                         <Row>
-                            {/* <SuperpowerForm /> */}
+                            <SuperpowerForm />
                         </Row>
                         <Row>
-                            {/* <SuperpowerTable superpowers={this.state.superpowers} /> */}
+                            <SuperpowerTable superpowers={this.state.superpowers} />
                         </Row>
                     </Col>
                 </Row>

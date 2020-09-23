@@ -6,18 +6,22 @@ import Input from "../components/Input";
 import Select from "../components/Select";
 import TextArea from "../components/TextArea";
 
-class AddCharacterForm extends Component {
+class AddOrganisationForm extends Component {
     state = {
         submission: {
             "name": "",
             "description": "",
-            "villain": false,
-            "superpower": "",
-            "inOrganisation": []
+            "location": {
+                "id": 1,
+                "name": "nyc",
+                "description": "nyc the big apple",
+                "address": "NYC, NY, USA",
+                "latitude": 2.0,
+                "longitute": 1.0
+            },
+            "telephone": "0123456789"
         },
-        allVillain: [true, false],
-        allSuperpowers: [],
-        allOrganisations: []
+        allLocations: []
     };
 
     handleSubmitForm = (values, { setSubmitting }) => {
@@ -32,9 +36,15 @@ class AddCharacterForm extends Component {
             submission: {
                 "name": "",
                 "description": "",
-                "villain": false,
-                "superpower": "",
-                "inOrganisation": []
+                "location": {
+                    "id": 1,
+                    "name": "",
+                    "description": "",
+                    "address": "",
+                    "latitude": 2.0,
+                    "longitute": 1.0
+                },
+                "telephone": ""
             }
         });
         console.log("Submission form cleared");
@@ -49,11 +59,14 @@ class AddCharacterForm extends Component {
         if (!values.description.length > 0) {
             errors.description = "Description is required";
         }
+        if (!values.telephone.length > 0) {
+            errors.telephone = "Telephone is required";
+        }
         return errors;
     }
 
     render() {
-        let { submission, allVillain, allSuperpowers, allOrganisations } = this.state;
+        let { submission, allLocations } = this.state;
         return (
             <Container fluid>
                 <Formik
@@ -104,48 +117,30 @@ class AddCharacterForm extends Component {
                                     <Row>
                                         <Col>
                                             <Select
-                                                name={"villain"}
-                                                value={values.villain}
+                                                name={"location"}
+                                                value={values.location}
                                                 onChange={handleChange}
-                                                title={"Is a Villain:"}
-                                                placeholder={"Select true or false..."}
-                                                options={allVillain}
+                                                title={"Location:"}
+                                                placeholder={"Select a location..."}
+                                                options={allLocations}
                                             />
-                                            <Alert show={!errors.villain == ""} variant={"danger"}>
-                                                {errors.villain && touched.villain && errors.villain}
+                                            <Alert show={!errors.location == ""} variant={"danger"}>
+                                                {errors.location && touched.location && errors.location}
                                             </Alert>
 
                                         </Col>
                                         <Col>
-                                            <Select
-                                                name={"superpower"}
-                                                value={values.superpower}
+                                            <Input name={"telephone"}
+                                                value={values.telephone}
                                                 onChange={handleChange}
-                                                title={"Superpower:"}
-                                                placeholder={"Select superpower..."}
-                                                options={allSuperpowers}
-                                            />
-                                            <Alert show={!errors.superpower == ""} variant={"danger"}>
-                                                {errors.superpower && touched.superpower && errors.superpower}
+                                                type={"text"}
+                                                title={"Telephone"}
+                                                placeholder={"Enter telephone..."} />
+                                            <Alert show={!errors.telephone == ""} variant={"danger"}>
+                                                {errors.telephone && touched.telephone && errors.telephone}
                                             </Alert>
 
                                         </Col>
-                                    </Row>
-                                    <br />
-                                    <Row className="justify-content-md-center">
-                                        <Select
-                                            name={"inOrganisation"}
-                                            value={values.inOrganisation}
-                                            onChange={handleChange}
-                                            title={"Organisations:"}
-                                            placeholder={"Select organisations..."}
-                                            options={allOrganisations}
-                                            multiple
-                                        />
-                                        <Alert show={!errors.inOrganisation == ""} variant={"danger"}>
-                                            {errors.inOrganisation && touched.inOrganisation && errors.inOrganisation}
-                                        </Alert>
-                                        <br />
                                     </Row>
                                     <br />
                                     <Row className="justify-content-md-center">
@@ -173,4 +168,4 @@ class AddCharacterForm extends Component {
     }
 }
 
-export default AddCharacterForm;
+export default AddOrganisationForm;

@@ -7,6 +7,8 @@ const SuperpowerTableHeader = () => {
             <th>#</th>
             <th>Name</th>
             <th>Description</th>
+            <th></th>
+            <th></th>
         </tr>
     );
 };

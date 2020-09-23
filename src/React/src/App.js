@@ -6,7 +6,7 @@ import Main from "./Main";
 
 function App() {
   return (
-    <Container>
+    <Container fluid style={{ padding: 0, marginRight: 0, marginLeft: 0 }}>
       <Main />
     </Container>
   );

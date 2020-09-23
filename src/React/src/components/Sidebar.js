@@ -15,13 +15,13 @@ function Sidebar() {
                 <Link to="/character">Superheroes and Supervillains</Link>
             </Nav.Item>
             <Nav.Item>
-                <Link to="#power">Superpowers</Link>
+                <Link to="/superpower">Superpowers</Link>
             </Nav.Item>
             <Nav.Item>
                 <Link to="#location">Locations</Link>
             </Nav.Item>
             <Nav.Item>
-                <Link to="#Organisation">Organisations</Link>
+                <Link to="/organisation">Organisations</Link>
             </Nav.Item>
             <Nav.Item>
                 <Link to="#sighting">Sightings</Link>

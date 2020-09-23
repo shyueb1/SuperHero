@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
     Container,
     Row,
@@ -15,31 +15,22 @@ import TableCharacter from "../components/TableCharacter";
 
 const SERVICE_URL = "http://localhost:8090/";
 
-class Character extends React.Component {
+class Superpower extends Component {
     state = {
         loading: false,
-        characters: [
+        superpowers: [
             {
                 "id": 1,
                 "name": "Bob",
                 "description": "A great super hero",
-                "superpower": {
-                    "id": 2,
-                    "name": "flying",
-                    "description": "You can fly like a bird"
-                },
-                "villain": false,
-                "inOrganisation": ["Organisation 1", "Organisation 2"]
+                "superpower": "Can fly",
+                "heroOrVillain": "Hero",
+                "organisations": ["Organisation 1", "Organisation 2"]
             }
         ]
     };
 
-    componentDidMount() {
-        console.log("App is now mounted");
-        this.loadCharacters();
-    }
-
-    loadCharacters() {
+    loadSuperpowers() {
         this.setState({ loading: true });
         console.log("Loading characters");
         fetch(SERVICE_URL + "hero")

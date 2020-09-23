@@ -3,6 +3,7 @@ package com.sg.superherosightings.Entity.JPAEntities;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -26,15 +27,15 @@ public class Hero {
     private boolean isVillain;
 
     @ManyToOne
-    @JoinColumn(name = "superpower_id")
+    @JoinColumn(name = "superpower_id", nullable = true)
     private SuperPower superpower;
 
-    @ManyToMany(mappedBy = "members")
-    private Set<Organisation> inOrganisation;
+    @ManyToMany(mappedBy = "members", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Organisation> inOrganisation;
 
     public Hero(){}
 
-    public Hero(int id, String name, String description, SuperPower superpower, boolean isVillain, Set<Organisation> inOrganisation) {
+    public Hero(int id, String name, String description, SuperPower superpower, boolean isVillain, List<Organisation> inOrganisation) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -83,11 +84,11 @@ public class Hero {
         isVillain = villain;
     }
 
-    public Set<Organisation> getInOrganisation() {
+    public List<Organisation> getInOrganisation() {
         return inOrganisation;
     }
 
-    public void setInOrganisation(Set<Organisation> inOrganisation) {
+    public void setInOrganisation(List<Organisation> inOrganisation) {
         this.inOrganisation = inOrganisation;
     }
 

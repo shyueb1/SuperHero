@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ServiceLayerImpl implements ServiceLayer{
@@ -26,6 +27,56 @@ public class ServiceLayerImpl implements ServiceLayer{
     }
 
     //GET Objects
+    @Override
+    public Hero getHeroById(int id){
+        return heroRepo.getOne(id);
+    }
+
+    @Override
+    public Location getLocationById(int id){
+        return locationRepo.getOne(id);
+    }
+
+    @Override
+    public Organisation getOrganisationById(int id){
+        return orgRepo.getOne(id);
+    }
+
+    @Override
+    public Sighting getSightingById(int id){
+        return sightRepo.getOne(id);
+    }
+
+    @Override
+    public SuperPower getSuperPowerById(int id){
+        return powerRepo.getOne(id);
+    }
+
+    @Override
+    public void deleteHeroById(int id){
+        heroRepo.deleteById(id);
+    }
+
+    @Override
+    public void deleteLocationById(int id){
+        locationRepo.deleteById(id);
+    }
+
+    @Override
+    public void deleteOrganisationById(int id){
+        orgRepo.deleteById(id);
+    }
+
+    @Override
+    public void deleteSightingById(int id){
+        sightRepo.deleteById(id);
+    }
+
+    @Override
+    public void deleteSuperPowerById(int id){
+        powerRepo.deleteById(id);
+    }
+
     @Override
     public List<Hero> getAllHeroes(){
         return heroRepo.findAll();
@@ -78,6 +129,11 @@ public class ServiceLayerImpl implements ServiceLayer{
     }
 
     @Override
+    public void addHeroToOrganisation(Hero hero, Organisation organisation){
+        orgRepo.addHeroToOrganisation(hero, organisation);
+    }
+
+    @Override
     public Sighting addOrUpdateSightings(Sighting sighting){
         return sightRepo.save(sighting);
     }
@@ -109,8 +165,17 @@ public class ServiceLayerImpl implements ServiceLayer{
     }
 
     @Override
-    public void addHeroToOrganisation(Hero hero, Organisation organisation) {
-        orgRepo.addHeroToOrganisation(hero, organisation);
+    public void deleteFromAllOrganisations(Hero hero){
+        orgRepo.deleteFromAllOrganisations(hero);
+    }
+
+    @Override
+    public void addHeroToOrganisations(Hero hero, List<Organisation> organisations) {
+        if(organisations != null && !organisations.isEmpty()){
+            organisations.stream().forEach(org -> {
+                orgRepo.addHeroToOrganisation(hero, org);
+            });
+        }
     }
 
     @Override

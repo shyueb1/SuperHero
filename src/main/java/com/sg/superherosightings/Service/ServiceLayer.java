@@ -6,6 +6,26 @@ import java.util.List;
 
 public interface ServiceLayer {
 
+    Hero getHeroById(int id);
+
+    Location getLocationById(int id);
+
+    Organisation getOrganisationById(int id);
+
+    Sighting getSightingById(int id);
+
+    SuperPower getSuperPowerById(int id);
+
+    void deleteHeroById(int id);
+
+    void deleteLocationById(int id);
+
+    void deleteOrganisationById(int id);
+
+    void deleteSightingById(int id);
+
+    void deleteSuperPowerById(int id);
+
     List<Hero> getAllHeroes();
 
     List<SuperPower> getAllSuperPowers();
@@ -28,6 +48,8 @@ public interface ServiceLayer {
 
     Sighting addOrUpdateSightings(Sighting sighting);
 
+    void addHeroToOrganisation(Hero hero, Organisation organisation);
+
     void deleteHero(Hero hero);
 
     void deleteSuperPower(SuperPower power);
@@ -38,7 +60,9 @@ public interface ServiceLayer {
 
     void deleteSighting(Sighting sighting);
 
-    void addHeroToOrganisation(Hero hero, Organisation organisation);
+    void deleteFromAllOrganisations(Hero hero);
+
+    void addHeroToOrganisations(Hero hero, List<Organisation> organisation);
 
     void addSuperPowerToHero(SuperPower power, Hero hero);
 

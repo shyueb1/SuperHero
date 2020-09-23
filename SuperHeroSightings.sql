@@ -18,7 +18,7 @@ CREATE TABLE organisation (
     location_id int,
     telephone varchar(12),
     CONSTRAINT unique_org_name UNIQUE (name),
-    CONSTRAINT fk_location_organisation FOREIGN KEY (location_id) REFERENCES location(id)
+    CONSTRAINT fk_location_organisation FOREIGN KEY (location_id) REFERENCES location(id) ON DELETE CASCADE
 );
 
 CREATE TABLE super_power(
@@ -40,18 +40,16 @@ CREATE TABLE hero (
 CREATE TABLE hero_in_organisation(
     hero_id int,
     organisation_id int,
-    CONSTRAINT fk_hero_id_hero_in_organisation FOREIGN KEY (hero_id) REFERENCES hero(id),
-    CONSTRAINT fk_organisation_id_hero_in_organisation FOREIGN KEY (organisation_id) REFERENCES organisation(id),
+    CONSTRAINT fk_hero_id_hero_in_organisation FOREIGN KEY (hero_id) REFERENCES hero(id) ON DELETE CASCADE,
+    CONSTRAINT fk_organisation_id_hero_in_organisation FOREIGN KEY (organisation_id) REFERENCES organisation(id) ON DELETE CASCADE,
     CONSTRAINT pk_hero_in_organisation PRIMARY KEY (hero_id, organisation_id)
 );
-
-
 
 CREATE TABLE sighting (
     id int AUTO_INCREMENT PRIMARY KEY,
     hero_id int,
     location_id int,
     date_of_sighting date NOT NULL,
-    CONSTRAINT fk_hero_id_sighting FOREIGN KEY (hero_id) REFERENCES hero(id),
-    CONSTRAINT fk_location_id_sighting FOREIGN KEY (location_id) REFERENCES location(id)
+    CONSTRAINT fk_hero_id_sighting FOREIGN KEY (hero_id) REFERENCES hero(id) ON DELETE CASCADE,
+    CONSTRAINT fk_location_id_sighting FOREIGN KEY (location_id) REFERENCES location(id) ON DELETE CASCADE
 );

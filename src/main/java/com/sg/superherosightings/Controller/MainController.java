@@ -2,11 +2,13 @@ package com.sg.superherosightings.Controller;
 
 import com.sg.superherosightings.Entity.JPAEntities.*;
 import com.sg.superherosightings.Service.ServiceLayerImpl;
+import net.bytebuddy.implementation.bind.annotation.Super;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,6 +24,31 @@ public class MainController {
     }
 
     //GET endpoints
+
+    @GetMapping("/hero/{id}")
+    public ResponseEntity<Hero> getHeroById(@PathVariable("id") int id){
+        return new ResponseEntity<>(service.getHeroById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/superpower/{id}")
+    public ResponseEntity<SuperPower> getSuperPowerById(@PathVariable("id") int id){
+        return new ResponseEntity<>(service.getSuperPowerById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/location/{id}")
+    public ResponseEntity<Location> getLocationById(@PathVariable("id") int id){
+        return new ResponseEntity<>(service.getLocationById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/organisation/{id}")
+    public ResponseEntity<Organisation> getOrganisationById(@PathVariable("id") int id){
+        return new ResponseEntity<>(service.getOrganisationById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/sighting/{id}")
+    public ResponseEntity<Sighting> getSightingById(@PathVariable("id") int id){
+        return new ResponseEntity<>(service.getSightingById(id), HttpStatus.OK);
+    }
 
     @GetMapping("/hero")
     public ResponseEntity<List<Hero>> getAllHeroes(){
@@ -43,12 +70,12 @@ public class MainController {
         return new ResponseEntity<>(service.getAllOrganisations(), HttpStatus.OK);
     }
 
-    @GetMapping("/sightings")
+    @GetMapping("/sighting")
     public ResponseEntity<List<Sighting>> getAllSightings(){
         return new ResponseEntity<>(service.getAllSightings(), HttpStatus.OK);
     }
 
-    @GetMapping("/sightings")
+    @GetMapping("/sighting/top10")
     public ResponseEntity<List<Sighting>> getTop10Sightings(){
         return new ResponseEntity<>(service.getAllSightings(), HttpStatus.OK);
     }
@@ -58,7 +85,11 @@ public class MainController {
 
     @PostMapping("/hero")
     public ResponseEntity<Object> addOrUpdateHero(@RequestBody Hero hero){
-        return new ResponseEntity<>(service.addOrUpdateHero(hero), HttpStatus.OK);
+        List<Organisation> orgs = hero.getInOrganisation();
+        hero.setInOrganisation(null);
+        Hero storedHero = service.addOrUpdateHero(hero);
+        service.addHeroToOrganisations(storedHero, orgs);
+        return new ResponseEntity<>(service.getHeroById(storedHero.getId()), HttpStatus.OK);
     }
 
     @PostMapping("/superpower")
@@ -76,18 +107,23 @@ public class MainController {
         return new ResponseEntity<>(service.addOrUpdateOrganisation(organisation), HttpStatus.OK);
     }
 
-    @PostMapping("/sightings")
+    @PostMapping("/sighting")
     public ResponseEntity<Object> addOrUpdateSighting(@RequestBody Sighting sighting){
+        Location location = service.getLocationById(sighting.getLocation().getId());
+        Hero hero = service.getHeroById(sighting.getHero().getId());
+        sighting.setLocation(location);
+        sighting.setHero(hero);
+        System.out.println(sighting.toString());
         return new ResponseEntity<>(service.addOrUpdateSightings(sighting), HttpStatus.OK);
     }
 
     //POST add existing
 
     @PostMapping("/hero/organisation")
-    public ResponseEntity<Object> addOrganisationToHero(@RequestBody Hero hero, @RequestBody Organisation organisation){
+    public ResponseEntity<Object> addOrganisationToHero(@RequestBody Hero hero){
         HashMap<String, String> jsonResponse = new HashMap<>();
         jsonResponse.put("successful", "true");
-        service.addHeroToOrganisation(hero, organisation);
+        service.addHeroToOrganisation(hero, hero.getInOrganisation().get(0));
         return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
     }
 
@@ -114,16 +150,15 @@ public class MainController {
     public ResponseEntity<Object> deleteHero(@RequestBody Hero hero){
         HashMap<String, String> jsonResponse = new HashMap<>();
         jsonResponse.put("successful", "true");
-        service.deleteHero(hero);
+        service.deleteHeroById(hero.getId());
         return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
     }
 
     @DeleteMapping("/superpower")
     public ResponseEntity<Object> deleteSuperPowers(@RequestBody SuperPower superPower){
-        System.out.println(superPower.toString());
         HashMap<String, String> jsonResponse = new HashMap<>();
         jsonResponse.put("successful", "true");
-        service.deleteSuperPower(superPower);
+        service.deleteSuperPowerById(superPower.getId());
         return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
     }
 
@@ -131,7 +166,7 @@ public class MainController {
     public ResponseEntity<Object> deleteLocation(@RequestBody Location location){
         HashMap<String, String> jsonResponse = new HashMap<>();
         jsonResponse.put("successful", "true");
-        service.deleteLocation(location);
+        service.deleteLocationById(location.getId());
         return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
     }
 
@@ -139,7 +174,7 @@ public class MainController {
     public ResponseEntity<Object> deleteOrganisation(@RequestBody Organisation organisation){
         HashMap<String, String> jsonResponse = new HashMap<>();
         jsonResponse.put("successful", "true");
-        service.deleteOrganisation(organisation);
+        service.deleteOrganisationById(organisation.getId());
         return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
     }
 
@@ -147,7 +182,7 @@ public class MainController {
     public ResponseEntity<Object> deleteSighting(@RequestBody Sighting sighting){
         HashMap<String, String> jsonResponse = new HashMap<>();
         jsonResponse.put("successful", "true");
-        service.deleteSighting(sighting);
+        service.deleteSightingById(sighting.getId());
         return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
     }
 

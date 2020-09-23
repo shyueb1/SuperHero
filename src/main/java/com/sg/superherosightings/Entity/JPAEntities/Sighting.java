@@ -14,27 +14,27 @@ public class Sighting {
     private int id;
 
     @NotNull(message = "Sighting must have a hero.")
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "hero_id", nullable = false)
     private Hero hero;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL) //Creates a location with fields specified if id doesnt exist
     @JoinColumn(name = "location_id")
     private Location location;
 
     @NotNull(message = "Sighting must have a date.")
     @Past(message = "Sighting cannot be in the future.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column
-    private LocalDate date;
+    @Column(name = "date_of_sighting")
+    private LocalDate dateOfSighting;
 
     public Sighting(){}
 
-    public Sighting(int id, @NotNull Hero hero, @NotNull Location location, @NotNull @Past LocalDate date) {
+    public Sighting(int id, @NotNull Hero hero, Location location, @NotNull @Past LocalDate dateOfSighting) {
         this.id = id;
         this.hero = hero;
         this.location = location;
-        this.date = date;
+        this.dateOfSighting = dateOfSighting;
     }
 
     public int getId() {
@@ -62,11 +62,11 @@ public class Sighting {
     }
 
     public LocalDate getDate() {
-        return date;
+        return dateOfSighting;
     }
 
     public void setDate(LocalDate date) {
-        this.date = date;
+        this.dateOfSighting = date;
     }
 
     @Override
@@ -75,7 +75,7 @@ public class Sighting {
         hash = 13 * hash + this.id;
         hash = 13 * hash + Objects.hashCode(this.hero);
         hash = 13 * hash + Objects.hashCode(this.location);
-        hash = 13 * hash + Objects.hashCode(this.date);
+        hash = 13 * hash + Objects.hashCode(this.dateOfSighting);
         return hash;
     }
 
@@ -100,7 +100,7 @@ public class Sighting {
         if (!Objects.equals(this.location, other.location)) {
             return false;
         }
-        if (!Objects.equals(this.date, other.date)) {
+        if (!Objects.equals(this.dateOfSighting, other.dateOfSighting)) {
             return false;
         }
         return true;
@@ -108,7 +108,7 @@ public class Sighting {
 
     @Override
     public String toString() {
-        return "Sighting{" + "id=" + id + ", hero=" + hero + ", location=" + location + ", date=" + date + '}';
+        return "Sighting{" + "id=" + id + ", hero=" + hero + ", location=" + location + ", dateOfSighting=" + dateOfSighting + '}';
     }
     
     

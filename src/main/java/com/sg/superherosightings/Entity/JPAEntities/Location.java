@@ -12,6 +12,7 @@ import javax.validation.constraints.Min;
 public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @Column
     private int id;
 
     @NotBlank(message = "Location must have a name.")

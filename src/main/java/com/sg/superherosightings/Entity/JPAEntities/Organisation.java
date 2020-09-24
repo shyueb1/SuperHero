@@ -25,7 +25,7 @@ public class Organisation {
     @Column
     private String description;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "location_id", nullable = true)
     private Location location;
 

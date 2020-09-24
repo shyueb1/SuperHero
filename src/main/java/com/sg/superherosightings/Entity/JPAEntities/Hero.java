@@ -68,11 +68,11 @@ public class Hero {
         this.description = description;
     }
 
-    public SuperPower getSuperpower() {
+    public SuperPower getSuperPower() {
         return superpower;
     }
 
-    public void setSuperpower(SuperPower superpower) {
+    public void setSuperPower(SuperPower superpower) {
         this.superpower = superpower;
     }
 

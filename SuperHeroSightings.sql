@@ -24,7 +24,8 @@ CREATE TABLE organisation (
 CREATE TABLE super_power(
     id int AUTO_INCREMENT PRIMARY KEY,
     name varchar(30) NOT NULL,
-    description varchar(250) NOT NULL
+    description varchar(250) NOT NULL,
+    CONSTRAINT unique_superpower_name UNIQUE (name)
 );
 
 CREATE TABLE hero (

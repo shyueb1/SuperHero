@@ -2,13 +2,14 @@ package com.sg.superherosightings.Controller;
 
 import com.sg.superherosightings.Entity.JPAEntities.*;
 import com.sg.superherosightings.Service.ServiceLayerImpl;
-import net.bytebuddy.implementation.bind.annotation.Super;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import java.util.Arrays;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -85,62 +86,134 @@ public class MainController {
 
     @PostMapping("/hero")
     public ResponseEntity<Object> addOrUpdateHero(@RequestBody Hero hero){
-        List<Organisation> orgs = hero.getInOrganisation();
-        hero.setInOrganisation(null);
-        Hero storedHero = service.addOrUpdateHero(hero);
-        service.addHeroToOrganisations(storedHero, orgs);
-        return new ResponseEntity<>(service.getHeroById(storedHero.getId()), HttpStatus.OK);
+        try{
+            if(hero.getName() == null ||  hero.getDescription() == null || hero.getName().isEmpty() || hero.getDescription().isEmpty()){
+                throw new InvalidObjectException("Hero name and/or description cannot be empty!");
+            }
+            if(hero.getInOrganisation() != null && !hero.getInOrganisation().isEmpty()) {
+                List<Organisation> orgs = hero.getInOrganisation();
+                hero.setInOrganisation(null);
+                Hero storedHero = service.addOrUpdateHero(hero);
+                service.addHeroToOrganisations(storedHero, orgs);
+                return new ResponseEntity<>(service.getHeroById(storedHero.getId()), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(service.addOrUpdateHero(hero), HttpStatus.OK);
+        } catch (DataIntegrityViolationException e){
+            throw new NonUniqueObjectException("Hero cannot have the same name or id as another hero.");
+        }
+
     }
 
     @PostMapping("/superpower")
     public ResponseEntity<Object> addOrUpdateSuperPower(@RequestBody SuperPower superPower){
-        return new ResponseEntity<>(service.addOrUpdateSuperPower(superPower), HttpStatus.OK);
+        try{
+            if(superPower.getName() == null || superPower.getDescription() == null ||  superPower.getName().isEmpty() || superPower.getDescription().isEmpty()){
+                throw new InvalidObjectException("Super power name and/or description cannot be empty!");
+            }
+            return new ResponseEntity<>(service.addOrUpdateSuperPower(superPower), HttpStatus.OK);
+        } catch (DataIntegrityViolationException e){
+            throw new NonUniqueObjectException("Super power cannot have the same name or id as another super power.");
+        }
     }
 
     @PostMapping("/location")
     public ResponseEntity<Object> addOrUpdateLocation(@RequestBody Location location){
+        if(location.getName() == null ||  location.getDescription() == null || location.getName().isEmpty() || location.getDescription().isEmpty()){
+            throw new InvalidObjectException("Location name and/or description cannot be empty!");
+        }
         return new ResponseEntity<>(service.addOrUpdateLocation(location), HttpStatus.OK);
     }
 
     @PostMapping("/organisation")
     public ResponseEntity<Object> addOrUpdateOrganisation(@RequestBody Organisation organisation){
-        return new ResponseEntity<>(service.addOrUpdateOrganisation(organisation), HttpStatus.OK);
+        try{
+            if(organisation.getName() == null ||  organisation.getDescription() == null || organisation.getName().isEmpty() || organisation.getDescription().isEmpty()){
+                throw new InvalidObjectException("Organisation name and/or description cannot be empty!");
+            }
+            if(organisation.getLocation() != null && organisation.getLocation().getId() != 0){
+                Location location = service.getLocationById(organisation.getLocation().getId());
+                organisation.setLocation(location);
+                return new ResponseEntity<>(service.addOrUpdateOrganisation(organisation), HttpStatus.OK);
+            }
+            throw new InvalidObjectException("Organisation location must be null or must contain an id of an existing location.");
+        } catch (DataIntegrityViolationException e){
+            throw new FailedPersistenceException("Organisation failed to be added. Object is fields may be missing or doesn't match sizing requirements.");
+        }
     }
 
     @PostMapping("/sighting")
     public ResponseEntity<Object> addOrUpdateSighting(@RequestBody Sighting sighting){
-        Location location = service.getLocationById(sighting.getLocation().getId());
-        Hero hero = service.getHeroById(sighting.getHero().getId());
-        sighting.setLocation(location);
-        sighting.setHero(hero);
-        System.out.println(sighting.toString());
-        return new ResponseEntity<>(service.addOrUpdateSightings(sighting), HttpStatus.OK);
+        try{
+            if(sighting.getHero() == null || sighting.getHero().getId() == 0){
+                throw new InvalidObjectException("Sighting object must include a Hero id.");
+            }
+            Hero hero = service.getHeroById(sighting.getHero().getId());
+            sighting.setHero(hero);
+            if(sighting.getLocation() != null && sighting.getLocation().getId() != 0) {
+                Location location = service.getLocationById(sighting.getLocation().getId());
+                sighting.setLocation(location);
+            }
+            return new ResponseEntity<>(service.addOrUpdateSightings(sighting), HttpStatus.OK);
+        } catch(DataIntegrityViolationException e){
+            throw new FailedPersistenceException("Hero or location id provided doesn't match existing rows.");
+        }
     }
 
     //POST add existing
 
     @PostMapping("/hero/organisation")
     public ResponseEntity<Object> addOrganisationToHero(@RequestBody Hero hero){
-        HashMap<String, String> jsonResponse = new HashMap<>();
-        jsonResponse.put("successful", "true");
-        service.addHeroToOrganisation(hero, hero.getInOrganisation().get(0));
-        return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
+        try{
+            if(hero == null || hero.getId() == 0 || hero.getInOrganisation() == null || hero.getInOrganisation().isEmpty()){
+                throw new InvalidObjectException("Hero id and/or organisation id cannot be empty");
+            }else{
+                HashMap<String, String> jsonResponse = new HashMap<>();
+                jsonResponse.put("successful", "true");
+                service.addHeroToOrganisation(hero, hero.getInOrganisation().get(0));
+                return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
+            }
+        } catch(DataIntegrityViolationException e){
+            throw new FailedPersistenceException("Hero or location id provided doesn't match existing rows.");
+        }
     }
 
     @PostMapping("/hero/superpower")
-    public ResponseEntity<Object> addSuperPowerToHero(@RequestBody Hero hero, @RequestBody SuperPower power){
-        HashMap<String, String> jsonResponse = new HashMap<>();
-        jsonResponse.put("successful", "true");
-        service.addSuperPowerToHero(power, hero);
-        return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
+    public ResponseEntity<Object> addSuperPowerToHero(@RequestBody Hero hero){
+        try{
+            System.out.println(hero.toString());
+            if(hero.getSuperPower() == null || hero.getSuperPower().getId() == 0){
+                throw new InvalidObjectException("Hero must include an id of an existing super power.");
+            }
+            HashMap<String, String> jsonResponse = new HashMap<>();
+            jsonResponse.put("successful", "true");
+            service.addSuperPowerToHero(hero.getId(), hero.getSuperPower().getId());
+            return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
+        } catch(DataIntegrityViolationException e){
+            System.out.println(e.getMessage());
+            throw new FailedPersistenceException("Hero or super power id provided doesn't match existing rows.");
+        } catch(MethodArgumentTypeMismatchException ex){
+            throw new InvalidObjectException("Hero is missing required fields.");
+        }
     }
 
     @PostMapping("/sighting/location")
-    public ResponseEntity<Object> addLocationToSighting(@RequestBody Location location, @RequestBody Sighting sighting){
-        HashMap<String, String> jsonResponse = new HashMap<>();
-        jsonResponse.put("successful", "true");
-        service.addLocationToSighting(location, sighting);
-        return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
+    public ResponseEntity<Object> addLocationToSighting(@RequestBody Sighting sighting){
+        try{
+            if(sighting.getLocation() == null || sighting.getLocation().getId() == 0 || sighting.getId() == 0){
+                throw new InvalidObjectException("Location id and sighting id is required to add a location to a sighting.");
+            }
+            Sighting retrievedSighting = service.getSightingById(sighting.getId());
+            Location location = service.getLocationById(sighting.getLocation().getId());
+            retrievedSighting.setLocation(location);
+            service.addOrUpdateSightings(retrievedSighting);
+            HashMap<String, String> jsonResponse = new HashMap<>();
+            jsonResponse.put("successful", "true");
+            return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
+        } catch(DataIntegrityViolationException e){
+            throw new FailedPersistenceException("Sighting or location id provided doesn't match existing rows.");
+        } catch(MethodArgumentTypeMismatchException ex){
+            throw new InvalidObjectException("Sighting is missing required fields.");
+        }
     }
 
 

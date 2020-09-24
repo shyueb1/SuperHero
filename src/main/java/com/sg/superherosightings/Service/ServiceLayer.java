@@ -64,7 +64,7 @@ public interface ServiceLayer {
 
     void addHeroToOrganisations(Hero hero, List<Organisation> organisation);
 
-    void addSuperPowerToHero(SuperPower power, Hero hero);
+    void addSuperPowerToHero(int heroId, int superPowerId);
 
     void addLocationToSighting(Location location, Sighting sighting);
 

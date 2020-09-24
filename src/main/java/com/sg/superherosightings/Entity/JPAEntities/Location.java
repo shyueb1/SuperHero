@@ -1,8 +1,11 @@
 package com.sg.superherosightings.Entity.JPAEntities;
 
+import org.aspectj.weaver.ast.Or;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 import java.util.Objects;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;

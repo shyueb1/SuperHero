@@ -178,8 +178,8 @@ public class ServiceLayerImpl implements ServiceLayer{
     }
 
     @Override
-    public void addSuperPowerToHero(SuperPower power, Hero hero) {
-        powerRepo.addSuperPowerToHero(power, hero);
+    public void addSuperPowerToHero(int heroId, int superPowerId) {
+        powerRepo.addSuperPowerToHero(heroId, superPowerId);
     }
 
     @Override
@@ -195,7 +195,7 @@ public class ServiceLayerImpl implements ServiceLayer{
 
     @Override
     public void deleteSuperPowerFromHero(Hero hero) {
-        hero.setSuperpower(null);
+        hero.setSuperPower(null);
         heroRepo.save(hero);
     }
 

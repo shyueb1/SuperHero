@@ -3,6 +3,7 @@ package com.sg.superherosightings.Controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -52,6 +53,13 @@ public class AppExceptionHandler {
     public ResponseEntity<Object> handleEntityNotFoundException(){
         HttpStatus badRequest = HttpStatus.INTERNAL_SERVER_ERROR;
         AppException exception = new AppException("Id doesn't match any existing entity.", badRequest, LocalDateTime.now());
+        return new ResponseEntity<>(exception, badRequest);
+    }
+
+    @ExceptionHandler(HttpMessageNotWritableException.class)
+    public ResponseEntity<Object> handleHttpMessageNotWritableException(){
+        HttpStatus badRequest = HttpStatus.INTERNAL_SERVER_ERROR;
+        AppException exception = new AppException("Failed to retrieve objects from database. Incorrect Id was provided.", badRequest, LocalDateTime.now());
         return new ResponseEntity<>(exception, badRequest);
     }
 }

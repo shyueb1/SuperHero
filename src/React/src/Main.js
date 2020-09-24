@@ -8,6 +8,7 @@ import Organisation from './pages/Organisation';
 import Sighting from './pages/Sightings';
 import AboutUs from './pages/AboutUs';
 import FAQs from './pages/FAQs';
+import Locations from './pages/Location';
 
 const Main = () => {
     return (
@@ -18,7 +19,7 @@ const Main = () => {
             <Route exact path="/organisation" component={Organisation}></Route>
             <Route exact path='/aboutus' component={AboutUs}></Route>
             <Route exact path='/faqs' component={FAQs}></Route>
-            {/* <Route exact path="/location" component={Locations}></Route>*/}
+            <Route exact path="/location" component={Locations}></Route>
 
             <Route exact path="/sighting" component={Sighting}></Route>
         </Switch>

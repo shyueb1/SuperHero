@@ -18,7 +18,7 @@ function Sidebar() {
                 <Link to="/superpower">Superpowers</Link>
             </Nav.Item>
             <Nav.Item>
-                <Link to="#location">Locations</Link>
+                <Link to="/location">Locations</Link>
             </Nav.Item>
             <Nav.Item>
                 <Link to="/organisation">Organisations</Link>

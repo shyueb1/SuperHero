@@ -23,14 +23,14 @@ function FAQs() {
                     <h2>FAQs</h2>
                     <hr />
                     <p>
-                        <h4>Question:</h4> Where do I view the most recent superhero and supervillain sitings?
+                        <h4>Question:</h4> Where do I view the most recent superhero and supervillain sightings?
                         </p>
                     <p>
-                        <h4>Answer:</h4> You can view the Top 10 Most Recent Sitings on the Home page! If you're near any of those locations then maybe you can pay them a visit...
+                        <h4>Answer:</h4> You can view the Top 10 Most Recent Sightings on the Home page! If you're near any of those locations then maybe you can pay them a visit...
                         </p>
                     <hr />
                     <p>
-                        <h4>Question:</h4> How do I log my own superhero siting?
+                        <h4>Question:</h4> How do I log my own superhero sighting?
                         </p>
                     <p>
                         <h4>Answer:</h4> On the Sightings page you can view all the logged sightings in a table and you can also fill in the form to add your own sighting to the database. Don't forget to add the superhero or supervillain and location to the database first if they are not already logged!

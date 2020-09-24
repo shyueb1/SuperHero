@@ -1,36 +1,90 @@
 import React, { Component } from "react";
-import { Button, Form, Col } from "react-bootstrap";
+import { Formik } from "formik";
+import { Button, Container, Col, Row, Alert, Form } from "react-bootstrap";
+import Input from "../components/Input";
+import Select from "../components/Select";
+import TextArea from "../components/TextArea";
 
-class SuperpowerForm extends Component {
+class AddSuperpowerForm extends Component {
     render() {
-
+        const { submission, validationForm, clearFrom, submitForm } = this.props;
         return (
-            <Col>
-                <Form>
-                    <Form.Group controlId="formSuperpowerName">
-                        <Form.Label>Name</Form.Label>
-                        <Form.Control
-                            type="text"
-                            placeholder="Superpower name"
-                        ></Form.Control>
-                    </Form.Group>
-
-                    <Form.Group controlId="formSuperpowerDescription">
-                        <Form.Label>Description</Form.Label>
-                        <Form.Control
-                            as="textarea"
-                            rows="2"
-                            placeholder="Superpower description"
-                        ></Form.Control>
-                    </Form.Group>
-
-                    <Button variant="primary" type="submit">
-                        Submit
-        </Button>
-                </Form>
-            </Col>
+            <Container fluid>
+                <Formik
+                    enableReinitialize={true}
+                    initialValues={submission}
+                    validation={validationForm}
+                    onReset={clearFrom}
+                    onSubmit={submitForm}
+                >
+                    {(formikProps) => {
+                        let {
+                            values,
+                            errors,
+                            touched,
+                            handleChange,
+                            handleReset,
+                            handleSubmit,
+                            isSubmitting,
+                        } = formikProps;
+                        return (
+                            <form onSubmit={handleSubmit}>
+                                <Row>
+                                    <Col sm={6}>
+                                        <Input
+                                            name={"name"}
+                                            value={values.name}
+                                            onChange={handleChange}
+                                            type={"text"}
+                                            title={"Name"}
+                                            placeholder={"Enter name..."}
+                                        />
+                                        <Alert show={!errors.name == ""} variant={"danger"}>
+                                            {errors.name && touched.name && errors.name}
+                                        </Alert>
+                                        <br />
+                                        <TextArea
+                                            name={"description"}
+                                            value={values.description}
+                                            onChange={handleChange}
+                                            title={"Description:"}
+                                            cols={50}
+                                            rows={3}
+                                        />
+                                        <Form.Text className="text-muted">
+                                            Testing text to add info here for user
+                      </Form.Text>
+                                        <Alert show={!errors.description == ""} variant={"danger"}>
+                                            {errors.description &&
+                                                touched.description &&
+                                                errors.description}
+                                        </Alert>
+                                    </Col>
+                                </Row>
+                                <Row className="justify-content">
+                                    <Button
+                                        type="reset"
+                                        action={handleReset}
+                                        title={"Clear"}
+                                        className="mr-4 ml-4 mt-2 mb-4"
+                                    >
+                                        Clear Form
+                    </Button>
+                                    <Button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        title={"Submit"}
+                                        className="mr-4 ml-4 mt-2 mb-4"
+                                    >
+                                        Submit Form
+                    </Button>
+                                </Row>
+                            </form>
+                        );
+                    }}
+                </Formik>
+            </Container>
         );
     }
 }
-
-export default SuperpowerForm;
+export default AddSuperpowerForm;

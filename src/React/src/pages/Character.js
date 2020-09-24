@@ -23,12 +23,12 @@ class Character extends React.Component {
                 "id": 1,
                 "name": "Bob",
                 "description": "A great super hero",
-                "superpower": {
+                "superPower": {
                     "id": 2,
                     "name": "flying",
                     "description": "You can fly like a bird"
                 },
-                "villain": false,
+                "villain": "",
                 "inOrganisation": ["Organisation 1", "Organisation 2"]
             }
         ]
@@ -56,7 +56,7 @@ class Character extends React.Component {
                 <Header />
 
                 <Row>
-                    <Col sm={3}>
+                    <Col sm={2}>
                         <Sidebar />
                     </Col>
 

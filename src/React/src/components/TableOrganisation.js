@@ -21,7 +21,7 @@ const OrganisationTableRow = ({ organisation, toggleEdit, toggleDelete }) => {
             <td>{organisation.id}</td>
             <td>{organisation.name}</td>
             <td>{organisation.description}</td>
-            <td>{organisation.location.name}</td>
+            <td>{organisation.location === null ? "Unknown" : organisation.location.name}</td>
             <td>{organisation.telephone}</td>
             <td>
                 <Button onClick={toggleEdit} value={organisation.id}>

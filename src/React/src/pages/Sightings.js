@@ -68,7 +68,7 @@ class Sightings extends React.Component {
                 <Header />
 
                 <Row>
-                    <Col sm={3}>
+                    <Col sm={2}>
                         <Sidebar />
                     </Col>
 

@@ -17,47 +17,59 @@ const SERVICE_URL = "http://localhost:8090/";
 
 class Home extends React.Component {
     state = {
-        sightings: [
-            {
-                id: 1,
-                hero: "Superman",
-                location: "29 Wall Street",
-                date: "2020-02-02",
+        isLoading: false,
+        topTenSightings:
+        {
+            "id": 1,
+            "hero": {
+                "id": 1,
+                "name": "Fake name",
+                "description": "Fake description",
+                "inOrganisation": [],
+                "superPower": {
+                    "id": 1,
+                    "name": "Fake Strength",
+                    "description": "Fake power description"
+                },
+                "villain": false
             },
-            {
-                id: 1,
-                hero: "Superman",
-                location: "29 Wall Street",
-                date: "2020-02-02",
+            "location": {
+                "id": 1,
+                "name": "Fake name",
+                "description": "Fake description",
+                "address": "Fake address",
+                "latitude": 0.02,
+                "longitude": 1.99
             },
-            {
-                id: 1,
-                hero: "Superman",
-                location: "29 Wall Street",
-                date: "2020-02-02",
-            },
-            {
-                id: 1,
-                hero: "Superman",
-                location: "29 Wall Street",
-                date: "2020-02-02",
-            },
-        ],
+            "date": "2020-09-17"
+        },
     };
+
+    componentDidMount() {
+        console.log("App is now mounted");
+        this.loadTopSightings();
+    }
+
+    loadTopSightings() {
+        this.setState({ isLoading: true });
+        console.log("Loading topSightings");
+        fetch(SERVICE_URL + "/sighting/top10")
+            .then((response) => response.json())
+            .then((data) => this.setState({ topTenSightings: data, isLoading: false }));
+    }
 
     render() {
         return (
             <Container fluid style={{ padding: 0 }}>
-                {/* <Container fluid> */}
                 <Header />
 
                 <Row>
-                    <Col sm={3}>
+                    <Col sm={2}>
                         <Sidebar />
                     </Col>
 
                     <Col sm={9}>
-                        <NewsFeed sightings={this.state.sightings} />
+                        <NewsFeed topSightings={this.state.topTenSightings} />
 
                     </Col>
                 </Row>

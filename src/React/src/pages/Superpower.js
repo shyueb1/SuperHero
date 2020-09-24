@@ -5,8 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Sidebar from "../components/Sidebar";
-// import SuperpowerForm from "../components/AddSuperpowerForm";
-// import SuperpowerTable from "../components/TableSuperpower";
+import AddSuperpowerForm from "../components/AddSuperpowerForm";
+import TableSuperpower from "../components/TableSuperPower";
 
 const SERVICE_URL = "http://localhost:8090";
 
@@ -35,23 +35,56 @@ class Superpower extends Component {
             .then((data) => this.setState({ superpowers: data, isLoading: false }));
     }
 
+    handleValidateForm = (values) => {
+        let errors = {};
+
+        if (!values.name.length > 0) {
+            errors.name = "Name is required";
+        }
+        if (!values.description.length > 0) {
+            errors.description = "Description is required";
+        }
+        return errors;
+    };
+
+    handleClearForm = (values) => {
+        this.setState({
+            submission: {
+                name: "",
+                description: "",
+            },
+        });
+        console.log("submission form cleared");
+    };
+
+    handleSubmitForm = (values, { setSubmitting }) => {
+        const submission = values;
+        alert(JSON.stringify(submission, null, 2));
+        console.log("submitted submission: " + JSON.stringify(submission));
+        setSubmitting(false);
+    };
+
     render() {
         return (
             <Container fluid style={{ padding: 0 }}>
-                {/* <Container fluid> */}
                 <Header />
 
                 <Row>
-                    <Col sm={3}>
+                    <Col sm={2}>
                         <Sidebar />
                     </Col>
 
                     <Col sm={9}>
                         <Row>
-                            {/* <SuperpowerForm /> */}
+                            <AddSuperpowerForm
+                                submission={this.state.submission}
+                                validationForm={this.handleValidateForm}
+                                clearFrom={this.handleClearForm}
+                                submitForm={this.handleSubmitForm}
+                            />
                         </Row>
                         <Row>
-                            {/* <SuperpowerTable superpowers={this.state.superpowers} /> */}
+                            <TableSuperpower superpowers={this.state.superpowers} />
                         </Row>
                     </Col>
                 </Row>

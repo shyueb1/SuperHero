@@ -94,7 +94,8 @@ class AddOrganisationForm extends Component {
                                         onChange={handleChange}
                                         type={"text"}
                                         title={"Name"}
-                                        placeholder={"Enter name..."} />
+                                        placeholder={"Enter name..."}
+                                    />
                                     <Alert show={!errors.name == ""} variant={"danger"}>
                                         {errors.name && touched.name && errors.name}
                                     </Alert>

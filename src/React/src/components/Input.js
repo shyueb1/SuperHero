@@ -14,8 +14,13 @@ const Input = props => {
                 value={props.value}
                 placeholder={props.placeholder}
                 onChange={props.onChange}
+            //border={props.border}
             />
-        </div>
+            <br />
+            <label htmlFor={props.name} className="form-label text-muted" style={{ fontSize: 12 }}>
+                {props.textmuted}
+            </label>
+        </div >
     );
 };
 

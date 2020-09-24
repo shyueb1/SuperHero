@@ -5,46 +5,91 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Sidebar from "../components/Sidebar";
-import SuperpowerForm from "../components/AddLocationForm";
-import SuperpowerTable from "../components/AddLocationTable";
+import AddLocationFrom from "../components/AddLocationForm";
+import TableLocation from "../components/TableLocation";
 
 const SERVICE_URL = "http://localhost:8090";
 
-class Superpower extends Component {
+class Location extends Component {
     state = {
         isLoading: false,
-        superpowers: [
+        locations: [
             {
                 id: 1,
-                name: "Invisible",
-                description: "Can be invisible for an hour without break",
+                name: "Street",
+                description: "Next to HSBC bank",
+                address: "10 Charington Street, London, UK",
+                latitude: 50.21,
+                longitude: -0.13,
             },
             {
-                id: 2,
-                name: "Fake",
-                description: "Fake fake",
+                id: 1,
+                name: "Street Fake ",
+                description: "Fake description",
+                address: "Fake address",
+                latitude: 50.21,
+                longitude: -0.13,
             },
         ],
+        submission: {
+            name: "",
+            description: "",
+            address: "",
+            latitude: undefined,
+            longitude: undefined,
+        },
     };
 
     componentDidMount() {
         console.log("App is now mounted");
-        this.loadSuperpowers();
+        this.loadLocations();
     }
 
-    loadSuperpowers() {
+    loadLocations() {
         this.setState({ isLoading: true });
-        console.log("Loading superpowers");
-        fetch(SERVICE_URL + "/superpower")
+        console.log("Loading locations");
+        fetch(SERVICE_URL + "/location")
             .then((response) => response.json())
-            .then((data) => this.setState({ superpowers: data, isLoading: false }));
+            .then((data) => this.setState({ locations: data, isLoading: false }));
     }
 
-    handleEditModalOpen = (event) => {
-        console.log("Opening Edit Modal");
-        if (event) event.preventDefault();
+    // handleEditModalOpen = (event) => {
+    //   console.log("Opening Edit Modal");
+    //   if (event) event.preventDefault();
 
-        let id = event.target.value;
+    //   let id = event.target.value;
+    // };
+
+    handleValidateForm = (values) => {
+        let errors = {};
+
+        if (!values.name.length > 0) {
+            errors.name = "Name is required";
+        }
+        if (!values.description.length > 0) {
+            errors.description = "Description is required";
+        }
+        return errors;
+    };
+
+    handleClearForm = (values) => {
+        this.setState({
+            submission: {
+                name: "",
+                description: "",
+                address: "",
+                latitude: undefined,
+                longitude: undefined,
+            },
+        });
+        console.log("submission form cleared");
+    };
+
+    handleSubmitForm = (values, { setSubmitting }) => {
+        const submission = values;
+        alert(JSON.stringify(submission, null, 2));
+        console.log("submitted submission: " + JSON.stringify(submission));
+        setSubmitting(false);
     };
 
     render() {
@@ -53,16 +98,21 @@ class Superpower extends Component {
                 <Header />
 
                 <Row>
-                    <Col sm={3}>
+                    <Col sm={2}>
                         <Sidebar />
                     </Col>
 
                     <Col sm={9}>
                         <Row>
-                            <SuperpowerForm />
+                            <AddLocationFrom
+                                locations={this.state.locations}
+                                validationForm={this.handleValidateForm}
+                                clearFrom={this.handleClearForm}
+                                submitForm={this.handleSubmitForm}
+                            />
                         </Row>
                         <Row>
-                            <SuperpowerTable superpowers={this.state.superpowers} />
+                            <TableLocation />
                         </Row>
                     </Col>
                 </Row>
@@ -75,4 +125,4 @@ class Superpower extends Component {
     }
 }
 
-export default Superpower;
+export default Location;

@@ -24,7 +24,7 @@ function Sidebar() {
                 <Link to="/organisation">Organisations</Link>
             </Nav.Item>
             <Nav.Item>
-                <Link to="#sighting">Sightings</Link>
+                <Link to="/sighting">Sightings</Link>
             </Nav.Item>
         </Nav>
     );

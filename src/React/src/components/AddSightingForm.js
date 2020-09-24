@@ -4,24 +4,17 @@ import { Button, Container, Col, Row, Alert } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Input from "../components/Input";
 import Select from "../components/Select";
-import TextArea from "../components/TextArea";
 
-class AddOrganisationForm extends Component {
+
+class AddSightingForm extends Component {
     state = {
         submission: {
-            "name": "",
-            "description": "",
-            "location": {
-                "id": 1,
-                "name": "nyc",
-                "description": "nyc the big apple",
-                "address": "NYC, NY, USA",
-                "latitude": 2.0,
-                "longitute": 1.0
-            },
-            "telephone": ""
+            "hero": "",
+            "location": "",
+            "date": ""
         },
-        allLocations: []
+        allHeros: [],
+        allLocations: [],
     };
 
     handleSubmitForm = (values, { setSubmitting }) => {
@@ -34,17 +27,9 @@ class AddOrganisationForm extends Component {
     handleClearForm = (values) => {
         this.setState({
             submission: {
-                "name": "",
-                "description": "",
-                "location": {
-                    "id": 1,
-                    "name": "",
-                    "description": "",
-                    "address": "",
-                    "latitude": 2.0,
-                    "longitute": 1.0
-                },
-                "telephone": ""
+                "hero": "",
+                "location": "",
+                "date": ""
             }
         });
         console.log("Submission form cleared");
@@ -53,20 +38,14 @@ class AddOrganisationForm extends Component {
     handleValidateForm = (values) => {
         let errors = {};
 
-        if (!values.name.length > 0) {
-            errors.name = "Name is required";
-        }
-        if (!values.description.length > 0) {
-            errors.description = "Description is required";
-        }
-        if (!values.telephone.length > 0) {
-            errors.telephone = "Telephone is required";
+        if (!values.date.length > 0) {
+            errors.date = "Date is required";
         }
         return errors;
     }
 
     render() {
-        let { submission, allLocations } = this.state;
+        let { submission, allHeros, allLocations } = this.state;
         return (
             <Container fluid>
                 <Formik
@@ -88,33 +67,22 @@ class AddOrganisationForm extends Component {
                     return (
                         <form onSubmit={handleSubmit}>
                             <Row>
-                                <Col sm={6}>
-                                    <Input name={"name"}
-                                        value={values.name}
-                                        onChange={handleChange}
-                                        type={"text"}
-                                        title={"Name"}
-                                        placeholder={"Enter name..."} />
-                                    <Alert show={!errors.name == ""} variant={"danger"}>
-                                        {errors.name && touched.name && errors.name}
-                                    </Alert>
-                                    <br />
-                                    <TextArea
-                                        name={"description"}
-                                        value={values.description}
-                                        onChange={handleChange}
-                                        title={"Description:"}
-                                        cols={30}
-                                        rows={4}
-                                    />
-                                    <Alert show={!errors.description == ""} variant={"danger"}>
-                                        {errors.description &&
-                                            touched.description &&
-                                            errors.description}
-                                    </Alert>
-                                </Col>
-                                <Col sm={6}>
+                                <Col>
                                     <Row>
+                                        <Col>
+                                            <Select
+                                                name={"hero"}
+                                                value={values.hero}
+                                                onChange={handleChange}
+                                                title={"Hero or Villain:"}
+                                                placeholder={"Select a hero or villain..."}
+                                                options={allHeros}
+                                            />
+                                            <Alert show={!errors.hero == ""} variant={"danger"}>
+                                                {errors.hero && touched.hero && errors.hero}
+                                            </Alert>
+
+                                        </Col>
                                         <Col>
                                             <Select
                                                 name={"location"}
@@ -129,18 +97,19 @@ class AddOrganisationForm extends Component {
                                             </Alert>
 
                                         </Col>
-                                        <Col>
-                                            <Input name={"telephone"}
-                                                value={values.telephone}
-                                                onChange={handleChange}
-                                                type={"text"}
-                                                title={"Telephone"}
-                                                placeholder={"Enter telephone..."} />
-                                            <Alert show={!errors.telephone == ""} variant={"danger"}>
-                                                {errors.telephone && touched.telephone && errors.telephone}
-                                            </Alert>
-
-                                        </Col>
+                                    </Row>
+                                    <br />
+                                    <Row className="justify-content-md-center">
+                                        <Input name={"date"}
+                                            value={values.date}
+                                            onChange={handleChange}
+                                            type={"text"}
+                                            title={"Date"}
+                                            placeholder={"Enter date..."} />
+                                        <Alert show={!errors.date == ""} variant={"danger"}>
+                                            {errors.date && touched.date && errors.date}
+                                        </Alert>
+                                        <br />
                                     </Row>
                                     <br />
                                     <Row className="justify-content-md-center">
@@ -168,4 +137,4 @@ class AddOrganisationForm extends Component {
     }
 }
 
-export default AddOrganisationForm;
+export default AddSightingForm;

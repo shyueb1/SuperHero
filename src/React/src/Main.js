@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Character from './pages/Character';
 import Superpower from './pages/Superpower';
 import Organisation from './pages/Organisation';
+import Sighting from './pages/Sightings';
 
 const Main = () => {
     return (
@@ -13,9 +14,9 @@ const Main = () => {
             <Route exact path='/character' component={Character}></Route>
             <Route exact path="/superpower" component={Superpower}></Route>
             <Route exact path="/organisation" component={Organisation}></Route>
-            {/* <Route exact path="/location" component={Locations}></Route>
-            
-            <Route exact path="/sighting" component={Sighting}></Route> */}
+            {/* <Route exact path="/location" component={Locations}></Route>*/}
+
+            <Route exact path="/sighting" component={Sighting}></Route>
         </Switch>
     );
 }

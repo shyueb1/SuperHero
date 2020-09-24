@@ -17,6 +17,10 @@ const Select = props => {
                     );
                 })}
             </select>
+            <br />
+            <label htmlFor={props.name} className="form-label text-muted" style={{ fontSize: 12 }}>
+                {props.textmuted}
+            </label>
         </div>
     );
 };

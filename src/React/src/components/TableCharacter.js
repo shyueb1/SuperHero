@@ -22,7 +22,7 @@ const CharacterTableRow = ({ character, toggleEdit, toggleDelete }) => {
             <td>{character.name}</td>
             <td>{character.description}</td>
             <td>{character.villain}</td>
-            <td>{character.superPower.name}</td>
+            <td>{character.superPower === null ? "N/A" : character.superPower.name}</td>
             <td>
                 <Button onClick={toggleEdit} value={character.id}>
                     Edit

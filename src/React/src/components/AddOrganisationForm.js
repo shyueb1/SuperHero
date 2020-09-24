@@ -6,29 +6,78 @@ import Input from "../components/Input";
 import Select from "../components/Select";
 import TextArea from "../components/TextArea";
 
+const SERVICE_URL = "http://localhost:8090/";
+
 class AddOrganisationForm extends Component {
     state = {
         submission: {
             "name": "",
             "description": "",
-            "location": {
-                "id": 1,
-                "name": "nyc",
-                "description": "nyc the big apple",
-                "address": "NYC, NY, USA",
-                "latitude": 2.0,
-                "longitute": 1.0
-            },
+            "location": "",
             "telephone": ""
         },
+        addOrganisation: {
+            "id": "",
+            "name": "",
+            "description": "",
+            "location": "",
+            "telephone": ""
+        },
+        locations: [
+            {
+                "id": "",
+                "name": "",
+                "description": "",
+                "address": "",
+                "latitude": "",
+                "longitude": ""
+            }
+        ],
         allLocations: []
     };
 
-    handleSubmitForm = (values, { setSubmitting }) => {
-        const submission = values;
-        alert(JSON.stringify(submission, null, 2));
-        console.log("Submitted submission: " + JSON.stringify(submission));
-        setSubmitting(false);
+    componentDidMount() {
+        console.log("App is now mounted");
+        this.loadLocations();
+        this.loadAllLocations();
+    }
+
+    loadLocations() {
+        this.setState({ loading: true });
+        console.log("Loading locations");
+        fetch(SERVICE_URL + "/location")
+            .then((response) => response.json())
+            .then((data) => this.setState({ locations: data, loading: false }));
+    }
+
+    loadAllLocations() {
+        let allLocs = [];
+        this.state.locations.forEach(l => {
+            allLocs.push(l.name);
+        });
+        this.setState({ allLocations: allLocs });
+        console.log(allLocs);
+        console.log("Successful load")
+    }
+
+    handleSubmitForm = () => {
+
+        fetch(SERVICE_URL + "/organisation/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(this.state.submission),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Success:", data);
+                this.props.loadOrganisations();
+            })
+            .catch((error) => {
+                console.log("Error:", error);
+            });
+
     }
 
     handleClearForm = (values) => {
@@ -36,14 +85,7 @@ class AddOrganisationForm extends Component {
             submission: {
                 "name": "",
                 "description": "",
-                "location": {
-                    "id": 1,
-                    "name": "",
-                    "description": "",
-                    "address": "",
-                    "latitude": 2.0,
-                    "longitute": 1.0
-                },
+                "location": "",
                 "telephone": ""
             }
         });
@@ -64,6 +106,28 @@ class AddOrganisationForm extends Component {
         }
         return errors;
     }
+
+    handleLocationChange = (event) => {
+        if (event) {
+            event.preventDefault();
+        }
+        let locationName = event.target.value;
+        let locationId;
+        this.state.locations.forEach(l => {
+            if (l.name === locationName) {
+                locationId = l.id;
+            }
+        });
+        let newObject = this.state.submission;
+        newObject.location = locationId;
+        this.setState({ submission: newObject });
+    }
+    //  this.setState(prevState => {
+    //     return {
+    //    submission.location.id: prevState.submission.location.locationId
+    //     }
+    // }
+    // )
 
     render() {
         let { submission, allLocations } = this.state;
@@ -89,6 +153,7 @@ class AddOrganisationForm extends Component {
                         <form onSubmit={handleSubmit}>
                             <Row>
                                 <Col sm={6}>
+                                    <h2>Add an Organisation</h2>
                                     <Input name={"name"}
                                         value={values.name}
                                         onChange={handleChange}
@@ -120,6 +185,7 @@ class AddOrganisationForm extends Component {
                                             <Select
                                                 name={"location"}
                                                 value={values.location}
+                                                onChange={this.handleLocationChange}
                                                 onChange={handleChange}
                                                 title={"Location:"}
                                                 placeholder={"Select a location..."}
@@ -147,7 +213,7 @@ class AddOrganisationForm extends Component {
                                     <Row className="justify-content-md-center">
                                         <Button
                                             type="reset"
-                                            action={handleReset}
+                                            onClick={handleReset}
                                             title={"Clear"}
                                             className="mr-4 ml-4 mt-2 mb-4"
                                         >Clear Form</Button>

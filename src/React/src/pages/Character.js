@@ -12,12 +12,14 @@ import Footer from "../components/Footer";
 import Sidebar from "../components/Sidebar";
 import AddCharacterForm from "../components/AddCharacterForm";
 import TableCharacter from "../components/TableCharacter";
+import EditModalCharacter from "../components/EditModalCharacter"
 
 const SERVICE_URL = "http://localhost:8090/";
 
 class Character extends React.Component {
     state = {
         loading: false,
+        showEditModal: false,
         characters: [
             {
                 "id": 1,
@@ -31,7 +33,20 @@ class Character extends React.Component {
                 "villain": "",
                 "inOrganisation": ["Organisation 1", "Organisation 2"]
             }
-        ]
+        ],
+        editCharacter: {
+            id: 1,
+            name: "Bob",
+            description: "A great super hero",
+            superPower: {
+                id: 2,
+                name: "flying",
+                description: "You can fly like a bird"
+            },
+            villain: "",
+            inOrganisation: ["Organisation 1", "Organisation 2"]
+        }
+
     };
 
     componentDidMount() {
@@ -49,6 +64,86 @@ class Character extends React.Component {
             ));
     }
 
+    handleDeleteCharacter = (event) => {
+        if (event) {
+            event.preventDefault();
+        }
+        let heroId = event.target.value;
+        console.log(`Submitting delete for hero id ${heroId}`)
+        fetch(SERVICE_URL + 'hero', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "id": heroId })
+        })
+            .then(data => { this.loadCharacters(); })
+            .catch(error => { console.error('Error: ', error); });
+    }
+
+    handleEditModalOpen = (event) => {
+        console.log("Opening Edit Modal");
+        if (event) {
+            event.preventDefault();
+        }
+        let id = event.target.value;
+        console.log(`Editing character ID: ${id}`);
+
+        fetch(SERVICE_URL + "/hero/" + id)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Success:", data);
+                this.setState({ editCharacter: data, showEditModal: true });
+            })
+            .catch((error) => {
+                console.log("Error:", error);
+            });
+    };
+
+    handleEditModalClose = (event) => {
+        console.log("Closing Edit Modal");
+        this.setState({ showEditModal: false });
+    };
+
+    handleEditFormChange = (event) => {
+        let inputName = event.target.name;
+        let inputValue = event.target.value;
+        let characterInfo = this.state.editCharacter;
+
+        console.log(`Something changed in ${inputName} : ${inputValue}`);
+
+        if (characterInfo.hasOwnProperty(inputName)) {
+            characterInfo[inputName] = inputValue;
+            this.setState({ editCharacter: characterInfo });
+        }
+    };
+
+    handleEditFormSubmit = (event) => {
+        if (event) {
+            event.preventDefault();
+        }
+        let id = event.target.value;
+        console.log(`Submitting edit for character ID: ${id}`);
+        console.log(this.state.editCharacter);
+
+        fetch(SERVICE_URL + "/hero/" + id, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(this.state.editCharacter),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Success:", data);
+                this.setState({ showEditModal: false });
+                this.loadCharacters();
+            })
+            .catch((error) => {
+                console.log("Error:", error);
+            });
+    };
+
     render() {
         return (
             <Container fluid style={{ padding: 0 }}>
@@ -64,12 +159,23 @@ class Character extends React.Component {
                         <Row>
                             <AddCharacterForm />
                         </Row>
+                        <hr />
                         <Row>
-                            <TableCharacter characters={this.state.characters} />
+                            <TableCharacter characters={this.state.characters}
+                                handleDelete={this.handleDeleteCharacter}
+                                handleEdit={this.handleEditModalOpen} />
                         </Row>
 
                     </Col>
                 </Row>
+
+                <EditModalCharacter
+                    character={this.state.editCharacter}
+                    showModal={this.state.showEditModal}
+                    handleClose={this.handleEditModalClose}
+                    handleChange={this.handleEditFormChange}
+                    handleSubmit={this.handleEditFormSubmit}
+                />
 
                 <Modal.Footer>
                     <Footer />

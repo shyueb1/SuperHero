@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function Sidebar() {
     return (
-        <Nav defaultActiveKey="#home" className="flex-column">
+        <Nav defaultActiveKey="#home" className="flex-column ml-4">
             <Nav.Item>
                 <Link to="/">Home</Link>
             </Nav.Item>

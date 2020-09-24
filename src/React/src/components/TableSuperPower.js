@@ -16,16 +16,16 @@ const SuperpowerTableHeader = () => {
 const SuperpowerTableRow = ({ superpower, toggleEdit, toggleDelete }) => {
     return (
         <tr>
-            <td>{superpower.superpowerId}</td>
+            <td>{superpower.id}</td>
             <td>{superpower.name}</td>
             <td>{superpower.description}</td>
             <td>
-                <Button onClick={toggleEdit} value={superpower.superpowerId}>
+                <Button onClick={toggleEdit} value={superpower.id}>
                     Edit
         </Button>
             </td>
             <td>
-                <Button onClick={toggleDelete} value={superpower.superpowerId}>
+                <Button onClick={toggleDelete} value={superpower.id}>
                     Delete
         </Button>
             </td>
@@ -46,7 +46,7 @@ class SuperpowerTable extends Component {
                         return (
                             <SuperpowerTableRow
                                 superpower={superpower}
-                                key={superpower.superpowerId}
+                                key={superpower.id}
                                 toggleEdit={this.props.handleEdit}
                                 toggleDelete={this.props.handleDelete}
                             />

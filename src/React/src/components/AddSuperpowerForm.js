@@ -7,7 +7,7 @@ import TextArea from "../components/TextArea";
 
 class AddSuperpowerForm extends Component {
     render() {
-        const { submission, validationForm, clearFrom, submitForm } = this.props;
+        let { submission, validationForm, clearFrom, submitForm } = this.props;
         return (
             <Container fluid>
                 <Formik
@@ -31,6 +31,7 @@ class AddSuperpowerForm extends Component {
                             <form onSubmit={handleSubmit}>
                                 <Row>
                                     <Col sm={6}>
+                                        <h2>Add a Superpower</h2>
                                         <Input
                                             name={"name"}
                                             value={values.name}

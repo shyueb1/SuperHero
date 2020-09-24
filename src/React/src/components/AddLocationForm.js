@@ -31,6 +31,7 @@ class AddLocationForm extends Component {
                             <form onSubmit={handleSubmit}>
                                 <Row>
                                     <Col sm={6}>
+                                        <h2>Add a Location</h2>
                                         <Input
                                             name={"name"}
                                             value={values.name}

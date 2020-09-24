@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import { Formik } from "formik";
 import { Button, Container, Col, Row, Alert } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Input from "../components/Input";
+import moment from "moment";
 import Select from "../components/Select";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 
 class AddSightingForm extends Component {
@@ -11,11 +14,17 @@ class AddSightingForm extends Component {
         submission: {
             "hero": "",
             "location": "",
-            "date": ""
+            "date": new Date()
         },
         allHeros: [],
         allLocations: [],
     };
+
+    handleChange = (date) => {
+        this.setState({
+            "date": date
+        });
+    }
 
     handleSubmitForm = (values, { setSubmitting }) => {
         const submission = values;
@@ -70,6 +79,7 @@ class AddSightingForm extends Component {
                                 <Col>
                                     <Row>
                                         <Col>
+                                            <h2>Add a Sighting</h2>
                                             <Select
                                                 name={"hero"}
                                                 value={values.hero}
@@ -99,17 +109,22 @@ class AddSightingForm extends Component {
                                         </Col>
                                     </Row>
                                     <br />
-                                    <Row className="justify-content-md-center">
-                                        <Input name={"date"}
-                                            value={values.date}
-                                            onChange={handleChange}
-                                            type={"text"}
-                                            title={"Date"}
-                                            placeholder={"Enter date..."} />
-                                        <Alert show={!errors.date == ""} variant={"danger"}>
-                                            {errors.date && touched.date && errors.date}
-                                        </Alert>
-                                        <br />
+                                    <Row>
+                                        <Col>
+                                            <Row><label>Date: </label></Row>
+                                            <Row>
+                                                <DatePicker
+                                                    selected={this.state.date}
+                                                    onChange={this.handleChange}
+                                                    dateFormat={"yyyy/MM/dd"}
+                                                    filterDate={(date) => {
+                                                        return moment() > date;
+                                                    }}
+                                                    placeholderText={"Select a date..."}
+                                                />
+                                                <br />
+                                            </Row>
+                                        </Col>
                                     </Row>
                                     <br />
                                     <Row className="justify-content-md-center">

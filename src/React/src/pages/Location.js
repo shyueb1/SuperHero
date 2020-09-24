@@ -53,6 +53,23 @@ class Location extends Component {
             .then((data) => this.setState({ locations: data, isLoading: false }));
     }
 
+    handleDeleteLocation = (event) => {
+        if (event) {
+            event.preventDefault();
+        }
+        let locationId = event.target.value;
+        console.log(`Submitting delete for lcoation id ${locationId}`)
+        fetch(SERVICE_URL + 'location', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "id": locationId })
+        })
+            .then(data => { this.loadLocations(); })
+            .catch(error => { console.error('Error: ', error); });
+    }
+
     // handleEditModalOpen = (event) => {
     //   console.log("Opening Edit Modal");
     //   if (event) event.preventDefault();
@@ -112,7 +129,7 @@ class Location extends Component {
                             />
                         </Row>
                         <Row>
-                            <TableLocation />
+                            <TableLocation handleDelete={this.handleDeleteLocation} />
                         </Row>
                     </Col>
                 </Row>

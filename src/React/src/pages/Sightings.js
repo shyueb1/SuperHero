@@ -61,6 +61,24 @@ class Sightings extends React.Component {
             ));
     }
 
+    handleDeleteSighting = (event) => {
+        if (event) {
+            event.preventDefault();
+        }
+        let sightingId = event.target.value;
+        console.log(`Submitting delete for sighting id ${sightingId}`)
+        fetch(SERVICE_URL + 'sightings', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "id": sightingId })
+        })
+            .then(data => { this.loadSightings(); })
+            .catch(error => { console.error('Error: ', error); });
+    }
+
+
     render() {
         return (
             <Container fluid style={{ padding: 0 }}>
@@ -77,7 +95,8 @@ class Sightings extends React.Component {
                             <AddSightingForm />
                         </Row>
                         <Row>
-                            <TableSighting sightings={this.state.sightings} />
+                            <TableSighting sightings={this.state.sightings}
+                                handleDelete={this.handleDeleteSighting} />
                         </Row>
 
                     </Col>

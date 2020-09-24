@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Form, Button, Modal } from "react-bootstrap";
 
-class EditModalSuperpower extends Component {
+class EditModalCharacter extends Component {
     render() {
         let {
-            superpower,
+            character,
             showModal,
             handleClose,
             handleChange,
@@ -14,31 +14,31 @@ class EditModalSuperpower extends Component {
             <Modal show={showModal} onHide={handleClose} animation={false}>
                 <Modal.Dialog>
                     <Modal.Header closeButton>
-                        <Modal.Title># {superpower.id}</Modal.Title>
+                        <Modal.Title># {character.id}</Modal.Title>
                     </Modal.Header>
                 </Modal.Dialog>
 
                 <Modal.Body>
                     <Form>
-                        <Form.Group controlId="superpowerName">
+                        <Form.Group controlId="characterName">
                             <Form.Label>Name:</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Enter name.."
                                 name="name"
-                                value={superpower.name}
+                                value={character.name}
                                 onChange={handleChange}
                             />
                         </Form.Group>
 
-                        <Form.Group controlId="superpowerName">
+                        <Form.Group controlId="characterName">
                             <Form.Label>Description:</Form.Label>
                             <Form.Control
                                 type="textarea"
                                 rows="2"
-                                placeholder="Superpower Description"
+                                placeholder="Character description.."
                                 name="description"
-                                value={superpower.description}
+                                value={character.description}
                                 onChange={handleChange}
                             />
                         </Form.Group>
@@ -49,7 +49,7 @@ class EditModalSuperpower extends Component {
               </Button>
                             <Button
                                 variant="primary"
-                                value={superpower.id}
+                                value={character.id}
                                 onClick={handleSubmit}
                             >
                                 Save changes
@@ -61,4 +61,4 @@ class EditModalSuperpower extends Component {
         );
     }
 }
-export default EditModalSuperpower;
+export default EditModalCharacter;

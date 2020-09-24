@@ -49,32 +49,22 @@ class AddCharacterForm extends Component {
         console.log("App is now mounted");
         this.loadSuperpowers();
         this.loadOrganisations();
-    }
-
-    loadAllSuperpowers() {
-        let allPowers = [];
-        this.state.superpowers.forEach(power => {
-            allPowers.push(power);
-        });
-        this.setState({ allSuperpowers: allPowers });
-        let allOrganisation = [];
-        this.state.organisations.forEach(org => {
-            allOrganisation.push(org);
-        });
-        this.setState({ allOrganisations: allOrganisation });
+        this.loadAllOrganisationsAndSuperpowers();
     }
 
     loadAllOrganisationsAndSuperpowers() {
         let allPowers = [];
         this.state.superpowers.forEach(power => {
-            allPowers.push(power);
+            allPowers.push(power.name);
         });
         this.setState({ allSuperpowers: allPowers });
-        let allOrganisation = [];
+
+        let allOrga = [];
         this.state.organisations.forEach(org => {
-            allOrganisation.push(org);
+            allOrga.push(org.name);
         });
-        this.setState({ allOrganisations: allOrganisation });
+        this.setState({ allOrganisations: allOrga });
+        console.log("Successful load")
     }
 
     loadSuperpowers() {
@@ -128,9 +118,9 @@ class AddCharacterForm extends Component {
     }
 
     render() {
-        let { submission, allVillain, superpowers, organisations, allSuperpowers, allOrganisations } = this.state;
+        let { submission, allVillain, allSuperpowers, allOrganisations } = this.state;
         return (
-            <Container fluid onLoad={this.loadAllOrganisationsAndSuperpowers}>
+            <Container fluid>
                 <Formik
                     enableReinitialize={true}
                     initialValues={submission}
@@ -151,11 +141,12 @@ class AddCharacterForm extends Component {
                         <form onSubmit={handleSubmit}>
                             <Row>
                                 <Col sm={7}>
+                                    <h2>Add a Superhero or Supervillain</h2>
                                     <Input name={"name"}
                                         value={values.name}
                                         onChange={handleChange}
                                         type={"text"}
-                                        title={"Name"}
+                                        title={"Name:"}
                                         placeholder={"Enter name..."}
                                     //border={touched.name && errors.name ? "error" : null}
                                     />
@@ -192,12 +183,13 @@ class AddCharacterForm extends Component {
                                     </Alert>
 
                                     <Select
-                                        name={"superpower"}
+                                        name={"superPower"}
                                         value={values.superPower}
                                         onChange={handleChange}
                                         title={"Superpower:"}
                                         placeholder={"Select superpower..."}
                                         options={allSuperpowers}
+                                        textmuted={"Navigate to the Superpowers page to add a new superpower"}
                                     />
                                     <Alert show={!errors.superPower == ""} variant={"danger"}>
                                         {errors.superPower && touched.superPower && errors.superPower}
@@ -209,6 +201,7 @@ class AddCharacterForm extends Component {
                                         title={"Organisations:"}
                                         placeholder={"Select organisations..."}
                                         options={allOrganisations}
+                                        textmuted={"Navigate to the Organisations page to add a new organisation"}
                                         multiple
                                     />
                                     <Alert show={!errors.inOrganisation == ""} variant={"danger"}>
@@ -220,7 +213,7 @@ class AddCharacterForm extends Component {
                             <Row>
                                 <Button
                                     type="reset"
-                                    action={handleReset}
+                                    onClick={handleReset}
                                     title={"Clear"}
                                     className="mr-4 ml-4 mt-2 mb-4"
                                 >Clear Form</Button>

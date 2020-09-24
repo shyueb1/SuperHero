@@ -18,31 +18,31 @@ const SERVICE_URL = "http://localhost:8090/";
 class Home extends React.Component {
     state = {
         isLoading: false,
-        topTenSightings:
-        {
-            "id": 1,
-            "hero": {
+        topTenSightings: [
+            {
                 "id": 1,
-                "name": "Fake name",
-                "description": "Fake description",
-                "inOrganisation": [],
-                "superPower": {
+                "hero": {
                     "id": 1,
-                    "name": "Fake Strength",
-                    "description": "Fake power description"
+                    "name": "Fake name",
+                    "description": "Fake description",
+                    "inOrganisation": [],
+                    "superPower": {
+                        "id": 1,
+                        "name": "Fake Strength",
+                        "description": "Fake power description"
+                    },
+                    "villain": false
                 },
-                "villain": false
-            },
-            "location": {
-                "id": 1,
-                "name": "Fake name",
-                "description": "Fake description",
-                "address": "Fake address",
-                "latitude": 0.02,
-                "longitude": 1.99
-            },
-            "date": "2020-09-17"
-        },
+                "location": {
+                    "id": 1,
+                    "name": "Fake name",
+                    "description": "Fake description",
+                    "address": "Fake address",
+                    "latitude": 0.02,
+                    "longitude": 1.99
+                },
+                "date": "2020-09-17"
+            }],
     };
 
     componentDidMount() {

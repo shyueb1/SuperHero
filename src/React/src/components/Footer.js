@@ -11,15 +11,17 @@ function Footer() {
         <Container fluid>
             <Row>
                 <Col sm={2} className="text-center">
-                    <Link to="#aboutus">About Us</Link>
+                    <Link to="/aboutus">About Us</Link>
                 </Col>
                 <Col sm={2} className="text-center">
-                    <Link to="#faqs">FAQs</Link>
+                    <Link to="/faqs">FAQs</Link>
                 </Col>
                 <Col sm={8} className="text-right">
-                    <Icon.Facebook />
-                    <Icon.Instagram />
-                    <Icon.Twitter />
+                    <a href="https://www.facebook.com/FromSuperheroes/"><Icon.Facebook /></a>
+                    &nbsp;
+                    <a href="https://www.instagram.com/comicbook/?hl=en"><Icon.Instagram /></a>
+                    &nbsp;
+                    <a href="https://twitter.com/FromSuperheroes?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><Icon.Twitter /></a>
                 </Col>
             </Row>
         </Container>

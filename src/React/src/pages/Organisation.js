@@ -50,6 +50,23 @@ class Organisation extends React.Component {
             ));
     }
 
+    handleDeleteOrganisation = (event) => {
+        if (event) {
+            event.preventDefault();
+        }
+        let organisationId = event.target.value;
+        console.log(`Submitting delete for organisation id ${organisationId}`)
+        fetch(SERVICE_URL + 'organisation', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "id": organisationId })
+        })
+            .then(data => { this.loadOrganisations(); })
+            .catch(error => { console.error('Error: ', error); });
+    }
+
     render() {
         return (
             <Container fluid style={{ padding: 0 }}>
@@ -66,7 +83,8 @@ class Organisation extends React.Component {
                             <AddOrganisationForm />
                         </Row>
                         <Row>
-                            <TableOrganisation organisations={this.state.organisations} />
+                            <TableOrganisation organisations={this.state.organisations}
+                                handleDelete={this.handleDeleteOrganisation} />
                         </Row>
 
                     </Col>

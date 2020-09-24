@@ -21,11 +21,15 @@ function AboutUs() {
                 </Col>
                 <Col sm={9}>
                     <h2>About Us</h2>
+                    <hr />
                     <p>
                         A superhero and supervillain sighting application by Ann Gurung, Dani Sithirangathan, Shyueb Sediqi and Megan Halpin.
                         </p>
                     <p>
                         This application was requested by the Hero Education and Relationship Organisation.
+                        </p>
+                    <p>
+                        We are here for all your superhero and supervillain needs. Find out the most recent sightings, log your own sightings and view all the superheroes, supervillains, superpowers, locations and organisations in the Hero Education database.
                         </p>
                 </Col>
             </Row>

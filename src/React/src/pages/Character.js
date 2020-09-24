@@ -45,13 +45,97 @@ class Character extends React.Component {
             },
             villain: "",
             inOrganisation: ["Organisation 1", "Organisation 2"]
-        }
+        },
+        allVillain: ["true", "false"],
+        superpowers: [
+            {
+                "id": 1,
+                "name": "Invisible",
+                "description": "Can be invisible for an hour without break",
+            }
+        ],
+        organisations: [
+            {
+                "name": "",
+                "description": "",
+                "location": {
+                    "id": 1,
+                    "name": "",
+                    "description": "",
+                    "address": "",
+                    "latitude": 2.0,
+                    "longitute": 1.0
+                },
+                "telephone": ""
+            }
+        ],
+        allSuperpowers: [],
+        allOrganisations: []
 
     };
-
     componentDidMount() {
         console.log("App is now mounted");
         this.loadCharacters();
+        this.loadSuperpowers();
+        this.loadOrganisations();
+    }
+
+    loadSuperpowers() {
+        this.setState({ loading: true });
+        console.log("Loading superpowers");
+        fetch(SERVICE_URL + "/superpower")
+            .then((response) => response.json())
+            .then((data) => this.setState({ superpowers: data, loading: false, allSuperpowers: data.map(d => d.name) }));
+    }
+
+    loadOrganisations() {
+        this.setState({ loading: true });
+        console.log("Loading organisations");
+        fetch(SERVICE_URL + "organisation")
+            .then(data => data.json())
+            .then(data => this.setState(
+                { organisations: data, loading: false, allOrganisations: data.map(d => d.name) }
+            ));
+    }
+    handleSubmitForm = (values) => {
+        let subName = values.name;
+        let subDescription = values.description;
+        let subVillain = values.villain;
+        let subSuperpower = values.superPower;
+        let superpowerId;
+        this.state.superpowers.forEach(s => {
+            if (s.name == subSuperpower) {
+                superpowerId = s.id;
+            }
+        });
+        let subOrg = values.inOrganisation;
+        let orgId = [];
+        let subMission = {
+            "name": subName,
+            "description": subDescription,
+            "superpower": {
+                "id": superpowerId
+            },
+            "isVillain": subVillain == "false" ? false : true,
+
+            "inOrganisation": orgId
+        };
+        fetch(SERVICE_URL + "/hero/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(subMission),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Success:", data);
+                this.loadCharacters();
+            })
+            .catch((error) => {
+                console.log("Error:", error);
+            });
+
     }
 
     loadCharacters() {
@@ -157,7 +241,13 @@ class Character extends React.Component {
 
                     <Col sm={9}>
                         <Row>
-                            <AddCharacterForm />
+                            <AddCharacterForm handleSubmitForm={this.handleSubmitForm}
+                                allSuperpowers={(this.state.allSuperpowers)}
+                                loadAll={this.loadLocationsAndOrganisations}
+                                superpowers={this.state.superpowers}
+                                allOrganisations={this.state.allOrganisations}
+                                organisations={this.state.organisations}
+                                allVillain={this.state.allVillain} />
                         </Row>
                         <hr />
                         <Row>

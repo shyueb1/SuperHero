@@ -18,79 +18,10 @@ class AddCharacterForm extends Component {
             "superPower": "",
             "inOrganisation": []
         },
-        allVillain: ["true", "false"],
-        superpowers: [
-            {
-                "id": 1,
-                "name": "Invisible",
-                "description": "Can be invisible for an hour without break",
-            }
-        ],
-        organisations: [
-            {
-                "name": "",
-                "description": "",
-                "location": {
-                    "id": 1,
-                    "name": "",
-                    "description": "",
-                    "address": "",
-                    "latitude": 2.0,
-                    "longitute": 1.0
-                },
-                "telephone": ""
-            }
-        ],
-        allSuperpowers: [],
-        allOrganisations: []
+
     };
 
-    componentDidMount() {
-        console.log("App is now mounted");
-        this.loadSuperpowers();
-        this.loadOrganisations();
-        this.loadAllOrganisationsAndSuperpowers();
-    }
 
-    loadAllOrganisationsAndSuperpowers() {
-        let allPowers = [];
-        this.state.superpowers.forEach(power => {
-            allPowers.push(power.name);
-        });
-        this.setState({ allSuperpowers: allPowers });
-
-        let allOrga = [];
-        this.state.organisations.forEach(org => {
-            allOrga.push(org.name);
-        });
-        this.setState({ allOrganisations: allOrga });
-        console.log("Successful load")
-    }
-
-    loadSuperpowers() {
-        this.setState({ loading: true });
-        console.log("Loading superpowers");
-        fetch(SERVICE_URL + "/superpower")
-            .then((response) => response.json())
-            .then((data) => this.setState({ superpowers: data, loading: false }));
-    }
-
-    loadOrganisations() {
-        this.setState({ loading: true });
-        console.log("Loading organisations");
-        fetch(SERVICE_URL + "organisation")
-            .then(data => data.json())
-            .then(data => this.setState(
-                { organisations: data, loading: false }
-            ));
-    }
-
-    handleSubmitForm = (values, { setSubmitting }) => {
-        const submission = values;
-        alert(JSON.stringify(submission, null, 2));
-        console.log("Submitted submission: " + JSON.stringify(submission));
-        setSubmitting(false);
-    }
 
     handleClearForm = (values) => {
         this.setState({
@@ -117,8 +48,11 @@ class AddCharacterForm extends Component {
         return errors;
     }
 
+
+
     render() {
-        let { submission, allVillain, allSuperpowers, allOrganisations } = this.state;
+        let { submission } = this.state;
+        let { allVillain, allSuperpowers, allOrganisations } = this.props;
         return (
             <Container fluid>
                 <Formik
@@ -126,7 +60,7 @@ class AddCharacterForm extends Component {
                     initialValues={submission}
                     validate={this.handleValidateForm}
                     onReset={this.handleClearForm}
-                    onSubmit={this.handleSubmitForm}
+                    onSubmit={this.props.handleSubmitForm}
                 >{formikProps => {
                     let {
                         values,
@@ -222,6 +156,7 @@ class AddCharacterForm extends Component {
                                     disabled={isSubmitting}
                                     title={"Submit"}
                                     className="mr-4 ml-4 mt-2 mb-4"
+                                    onClick={handleSubmit}
                                 >Submit Form</Button>
                             </Row>
                         </form>

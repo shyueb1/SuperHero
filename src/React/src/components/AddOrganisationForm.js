@@ -10,6 +10,7 @@ const SERVICE_URL = "http://localhost:8090/";
 
 class AddOrganisationForm extends Component {
     state = {
+        loading: false,
         submission: {
             "name": "",
             "description": "",
@@ -22,63 +23,12 @@ class AddOrganisationForm extends Component {
             "description": "",
             "location": "",
             "telephone": ""
-        },
-        locations: [
-            {
-                "id": "",
-                "name": "",
-                "description": "",
-                "address": "",
-                "latitude": "",
-                "longitude": ""
-            }
-        ],
-        allLocations: []
+        }
     };
 
-    componentDidMount() {
-        console.log("App is now mounted");
-        this.loadLocations();
-        this.loadAllLocations();
-    }
 
-    loadLocations() {
-        this.setState({ loading: true });
-        console.log("Loading locations");
-        fetch(SERVICE_URL + "/location")
-            .then((response) => response.json())
-            .then((data) => this.setState({ locations: data, loading: false }));
-    }
 
-    loadAllLocations() {
-        let allLocs = [];
-        this.state.locations.forEach(l => {
-            allLocs.push(l.name);
-        });
-        this.setState({ allLocations: allLocs });
-        console.log(allLocs);
-        console.log("Successful load")
-    }
 
-    handleSubmitForm = () => {
-
-        fetch(SERVICE_URL + "/organisation/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(this.state.submission),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Success:", data);
-                this.props.loadOrganisations();
-            })
-            .catch((error) => {
-                console.log("Error:", error);
-            });
-
-    }
 
     handleClearForm = (values) => {
         this.setState({
@@ -119,7 +69,7 @@ class AddOrganisationForm extends Component {
             }
         });
         let newObject = this.state.submission;
-        newObject.location = locationId;
+        newObject.location = { "id": locationId };
         this.setState({ submission: newObject });
     }
     //  this.setState(prevState => {
@@ -130,7 +80,8 @@ class AddOrganisationForm extends Component {
     // )
 
     render() {
-        let { submission, allLocations } = this.state;
+        let { submission } = this.state;
+        let { locations, allLocations, handleSubmitForm } = this.props;
         return (
             <Container fluid>
                 <Formik
@@ -138,7 +89,7 @@ class AddOrganisationForm extends Component {
                     initialValues={submission}
                     validate={this.handleValidateForm}
                     onReset={this.handleClearForm}
-                    onSubmit={this.handleSubmitForm}
+                    onSubmit={handleSubmitForm}
                 >{formikProps => {
                     let {
                         values,
@@ -222,6 +173,7 @@ class AddOrganisationForm extends Component {
                                             disabled={isSubmitting}
                                             title={"Submit"}
                                             className="mr-4 ml-4 mt-2 mb-4"
+                                            onClick={handleSubmit}
                                         >Submit Form</Button>
                                     </Row>
                                 </Col>

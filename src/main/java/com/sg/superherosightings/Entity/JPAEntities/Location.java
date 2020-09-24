@@ -131,4 +131,5 @@ public class Location {
                 ", longitude=" + longitude +
                 '}';
     }
+
 }

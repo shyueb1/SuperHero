@@ -70,46 +70,28 @@ public class Sighting {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 13 * hash + this.id;
-        hash = 13 * hash + Objects.hashCode(this.hero);
-        hash = 13 * hash + Objects.hashCode(this.location);
-        hash = 13 * hash + Objects.hashCode(this.dateOfSighting);
-        return hash;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sighting sighting = (Sighting) o;
+        return id == sighting.id &&
+                hero.equals(sighting.hero) &&
+                location.equals(sighting.location) &&
+                dateOfSighting.equals(sighting.dateOfSighting);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Sighting other = (Sighting) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        if (!Objects.equals(this.hero, other.hero)) {
-            return false;
-        }
-        if (!Objects.equals(this.location, other.location)) {
-            return false;
-        }
-        if (!Objects.equals(this.dateOfSighting, other.dateOfSighting)) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        return Objects.hash(id, hero, location, dateOfSighting);
     }
 
     @Override
     public String toString() {
-        return "Sighting{" + "id=" + id + ", hero=" + hero + ", location=" + location + ", dateOfSighting=" + dateOfSighting + '}';
+        return "Sighting{" +
+                "id=" + id +
+                ", hero=" + hero +
+                ", location=" + location +
+                ", dateOfSighting=" + dateOfSighting +
+                '}';
     }
-    
-    
 }

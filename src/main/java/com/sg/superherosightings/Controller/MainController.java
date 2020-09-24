@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -135,6 +136,10 @@ public class MainController {
                 organisation.setLocation(location);
                 return new ResponseEntity<>(service.addOrUpdateOrganisation(organisation), HttpStatus.OK);
             }
+            if(organisation.getLocation() == null){
+                organisation.setLocation(null);
+                return new ResponseEntity<>(service.addOrUpdateOrganisation(organisation), HttpStatus.OK);
+            }
             throw new InvalidObjectException("Organisation location must be null or must contain an id of an existing location.");
         } catch (DataIntegrityViolationException e){
             throw new FailedPersistenceException("Organisation failed to be added. Object is fields may be missing or doesn't match sizing requirements.");
@@ -173,7 +178,7 @@ public class MainController {
                 return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
             }
         } catch(DataIntegrityViolationException e){
-            throw new FailedPersistenceException("Hero or location id provided doesn't match existing rows.");
+            throw new FailedPersistenceException("Hero or location id provided doesn't match existing rows or combination is a duplicate.");
         }
     }
 
@@ -190,7 +195,7 @@ public class MainController {
             return new ResponseEntity<>(jsonResponse, HttpStatus.OK);
         } catch(DataIntegrityViolationException e){
             System.out.println(e.getMessage());
-            throw new FailedPersistenceException("Hero or super power id provided doesn't match existing rows.");
+            throw new FailedPersistenceException("Hero or super power id provided doesn't match existing rows or combination is a duplicate.");
         } catch(MethodArgumentTypeMismatchException ex){
             throw new InvalidObjectException("Hero is missing required fields.");
         }

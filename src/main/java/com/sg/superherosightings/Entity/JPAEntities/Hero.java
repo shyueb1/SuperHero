@@ -100,23 +100,23 @@ public class Hero {
         return id == hero.id &&
                 isVillain == hero.isVillain &&
                 name.equals(hero.name) &&
-                description.equals(hero.description) &&
-                superpower.equals(hero.superpower) &&
-                Objects.equals(inOrganisation, hero.inOrganisation);
+                description.equals(hero.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, superpower, isVillain, inOrganisation);
+        return Objects.hash(id, name, description, isVillain);
     }
 
     @Override
     public String toString() {
         return "Hero{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
-                ", superpower='" + superpower + '\'' +
                 ", isVillain=" + isVillain +
+                ", superpower=" + superpower +
+                ", inOrganisation=" + inOrganisation +
                 '}';
     }
 }

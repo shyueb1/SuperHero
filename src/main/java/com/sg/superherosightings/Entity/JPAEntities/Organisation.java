@@ -110,14 +110,12 @@ public class Organisation {
         return id == that.id &&
                 name.equals(that.name) &&
                 description.equals(that.description) &&
-                location.equals(that.location) &&
-                telephone.equals(that.telephone) &&
-                Objects.equals(members, that.members);
+                telephone.equals(that.telephone);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, location, telephone, members);
+        return Objects.hash(id, name, description, telephone);
     }
 
     @Override

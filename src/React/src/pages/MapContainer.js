@@ -39,7 +39,7 @@ export class MapContainer extends React.Component {
                 {/* <Container fluid> */}
                 <Header />
                 <Row>
-                    <Col sm={3}>
+                    <Col sm={3} style={{ backgroundColor: "AliceBlue" }}>
                         <Sidebar />
                     </Col>
 

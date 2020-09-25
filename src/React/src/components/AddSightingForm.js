@@ -5,6 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import moment from "moment";
 import Select from "../components/Select";
 import DatePicker from "react-datepicker";
+import { BsPersonFill, BsFillLightningFill } from "react-icons/bs";
+import { TiLocation } from "react-icons/ti";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -120,6 +122,10 @@ class AddSightingForm extends Component {
                                             title={"Hero or Villain:"}
                                             placeholder={"Select a hero or villain..."}
                                             options={allCharacters}
+                                            icon={<BsPersonFill />}
+                                            textmuted={
+                                                "Navigate to the Superheroes and Supervillains page to add a new hero or villain"
+                                            }
                                         />
                                         <Alert show={!errors.hero == ""} variant={"danger"}>
                                             {errors.hero && touched.hero && errors.hero}
@@ -132,6 +138,11 @@ class AddSightingForm extends Component {
                                             title={"Location:"}
                                             placeholder={"Select a location..."}
                                             options={allLocations}
+                                            icon={<TiLocation />}
+                                            textmuted={
+                                                "Navigate to the Locations page to add a new location"
+                                            }
+
                                         />
                                         <Alert show={!errors.location == ""} variant={"danger"}>
                                             {errors.location && touched.location && errors.location}
@@ -183,6 +194,5 @@ class AddSightingForm extends Component {
             </Container>
         );
     }
-}
-
+};
 export default AddSightingForm;

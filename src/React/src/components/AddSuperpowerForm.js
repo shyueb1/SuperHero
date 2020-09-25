@@ -4,6 +4,7 @@ import { Button, Container, Col, Row, Alert, Form } from "react-bootstrap";
 import Input from "../components/Input";
 import Select from "../components/Select";
 import TextArea from "../components/TextArea";
+import { BsFillLightningFill } from "react-icons/bs"
 
 class AddSuperpowerForm extends Component {
   render() {
@@ -39,7 +40,8 @@ class AddSuperpowerForm extends Component {
                       value={values.name}
                       onChange={handleChange}
                       type={"text"}
-                      title={"Name"}
+                      icon={<BsFillLightningFill />}
+                      title={"Name: "}
                       placeholder={"Enter name..."}
                     />
                     <Alert show={!errors.name == ""} variant={"danger"}>

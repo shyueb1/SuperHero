@@ -16,10 +16,10 @@ function AboutUs() {
         <Container fluid style={{ padding: 0 }}>
             <Header />
             <Row>
-                <Col sm={3}>
+                <Col sm={3} style={{ backgroundColor: "AliceBlue" }}>
                     <Sidebar />
                 </Col>
-                <Col sm={9}>
+                <Col sm={9} style={{ padding: 50 }}>
                     <h2>About Us</h2>
                     <hr />
                     <p>

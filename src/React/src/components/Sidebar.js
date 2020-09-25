@@ -4,29 +4,37 @@ import {
     Nav
 } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { TiHome, TiLocation } from "react-icons/ti";
+import { BsPersonFill, BsBuilding, BsFillLightningFill, BsEyeFill } from "react-icons/bs";
 
 function Sidebar() {
     return (
-        <Nav defaultActiveKey="#home" className="flex-column ml-4">
+        <Nav defaultActiveKey="#home" className="flex-column ml-4" >
+            <br />
             <Nav.Item>
-                <Link to="/">Home</Link>
+                <Link to="/"><TiHome /> Home</Link>
             </Nav.Item>
+            <br />
             <Nav.Item>
-                <Link to="/character">Superheroes and Supervillains</Link>
+                <Link to="/character"><BsPersonFill /> Superheroes and Supervillains</Link>
             </Nav.Item>
+            <br />
             <Nav.Item>
-                <Link to="/superpower">Superpowers</Link>
+                <Link to="/superpower"><BsFillLightningFill /> Superpowers</Link>
             </Nav.Item>
+            <br />
             <Nav.Item>
-                <Link to="/location">Locations</Link>
+                <Link to="/location"><TiLocation /> Locations</Link>
             </Nav.Item>
+            <br />
             <Nav.Item>
-                <Link to="/organisation">Organisations</Link>
+                <Link to="/organisation"><BsBuilding /> Organisations</Link>
             </Nav.Item>
+            <br />
             <Nav.Item>
-                <Link to="/sighting">Sightings</Link>
+                <Link to="/sighting"><BsEyeFill /> Sightings</Link>
             </Nav.Item>
-        </Nav>
+        </ Nav>
     );
 }
 export default Sidebar;

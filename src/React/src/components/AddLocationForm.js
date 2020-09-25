@@ -3,6 +3,7 @@ import { Formik } from "formik";
 import { Button, Container, Col, Row, Alert } from "react-bootstrap";
 import Input from "../components/Input";
 import TextArea from "../components/TextArea";
+import { TiLocation } from "react-icons/ti";
 
 class AddLocationForm extends Component {
   render() {
@@ -38,7 +39,8 @@ class AddLocationForm extends Component {
                       value={values.name}
                       onChange={handleChange}
                       type={"text"}
-                      title={"Name"}
+                      title={"Name: "}
+                      icon={<TiLocation />}
                       placeholder={"Enter name..."}
                     />
                     <Alert show={!errors.name == ""} variant={"danger"}>
@@ -66,7 +68,7 @@ class AddLocationForm extends Component {
                         value={values.address}
                         onChange={handleChange}
                         type={"text"}
-                        title={"Address"}
+                        title={"Address:"}
                         placeholder={"Enter address..."}
                         cols={50}
                         rows={3}
@@ -79,16 +81,17 @@ class AddLocationForm extends Component {
                         value={values.latitude}
                         onChange={handleChange}
                         type={"number"}
-                        title={"Latitude"}
+                        title={"Latitude:"}
                         placeholder={"Enter latitude..."}
                         textmuted={"Range: -90 to 90"}
                       />
+                &nbsp;&nbsp;
                       <Input
                         name={"longitude"}
                         value={values.longitude}
                         onChange={handleChange}
                         type={"number"}
-                        title={"Longitude"}
+                        title={"Longitude:"}
                         placeholder={"Enter longitude..."}
                         textmuted={"Range: -180 to 180"}
                       />

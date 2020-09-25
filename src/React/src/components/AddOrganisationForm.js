@@ -5,6 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Input from "../components/Input";
 import Select from "../components/Select";
 import TextArea from "../components/TextArea";
+import { TiLocation, TiPhone } from "react-icons/ti";
+import { BsBuilding } from "react-icons/bs";
 
 const SERVICE_URL = "http://localhost:8090/";
 
@@ -103,7 +105,8 @@ class AddOrganisationForm extends Component {
                       value={values.name}
                       onChange={handleChange}
                       type={"text"}
-                      title={"Name"}
+                      title={"Name:"}
+                      icon={<BsBuilding />}
                       placeholder={"Enter name..."}
                     />
                     <Alert show={!errors.name == ""} variant={"danger"}>
@@ -133,6 +136,7 @@ class AddOrganisationForm extends Component {
                         onChange={this.handleLocationChange}
                         onChange={handleChange}
                         title={"Location:"}
+                        icon={<TiLocation />}
                         placeholder={"Select a location..."}
                         options={allLocations}
                         textmuted={
@@ -147,7 +151,8 @@ class AddOrganisationForm extends Component {
                         value={values.telephone}
                         onChange={handleChange}
                         type={"text"}
-                        title={"Telephone"}
+                        title={"Telephone: "}
+                        icon={<TiPhone />}
                         placeholder={"Enter telephone..."}
                       />
                       <Alert show={!errors.telephone == ""} variant={"danger"}>

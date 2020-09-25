@@ -210,11 +210,11 @@ class Organisation extends React.Component {
         {/* <Container fluid> */}
         <Header />
         <Row>
-          <Col sm={2}>
+          <Col sm={2} style={{ backgroundColor: "AliceBlue" }}>
             <Sidebar />
           </Col>
 
-          <Col sm={9}>
+          <Col sm={9} style={{ padding: 50 }}>
             <Row>
               <AddOrganisationForm
                 handleSubmitForm={this.handleSubmitForm}

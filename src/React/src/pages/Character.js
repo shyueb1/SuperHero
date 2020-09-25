@@ -219,10 +219,17 @@ class Character extends React.Component {
 
     console.log(`Something changed in ${inputName} : ${inputValue}`);
 
-    if (characterInfo.hasOwnProperty(inputName)) {
-      characterInfo[inputName] = inputValue;
-      this.setState({ editCharacter: characterInfo });
-    }
+    console.log((characterInfo.inputName = inputValue));
+
+    characterInfo.inputName = inputValue;
+    let superpowerID;
+    this.state.superpowers.forEach((s) => {
+      if (s.name == characterInfo.inputName) {
+        superpowerID = s.id;
+      }
+    });
+    characterInfo.superPower.id = superpowerID;
+    this.setState({ editCharacter: characterInfo });
   };
 
   handleEditFormSubmit = (event) => {
@@ -247,7 +254,8 @@ class Character extends React.Component {
       id: this.state.editCharacter.id,
       superPower: { id: this.state.editCharacter.superPower.id },
     };
-
+    console.log(JSON.stringify(subMission));
+    console.log(JSON.stringify(superpowerSubmission));
     Promise.all([
       fetch(SERVICE_URL + "hero", {
         method: "POST",
@@ -285,11 +293,11 @@ class Character extends React.Component {
         <Header />
 
         <Row>
-          <Col sm={2}>
+          <Col sm={2} style={{ backgroundColor: "AliceBlue" }}>
             <Sidebar />
           </Col>
 
-          <Col sm={9}>
+          <Col sm={9} style={{ padding: 50 }}>
             <Row>
               <AddCharacterForm
                 handleSubmitForm={this.handleSubmitForm}

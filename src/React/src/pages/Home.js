@@ -62,7 +62,7 @@ class Home extends React.Component {
         <Header />
 
         <Row>
-          <Col sm={2}>
+          <Col sm={2} style={{ backgroundColor: "AliceBlue" }}>
             <Sidebar />
           </Col>
 

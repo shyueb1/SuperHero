@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Input from "../components/Input";
 import Select from "../components/Select";
 import TextArea from "../components/TextArea";
-import { BsPersonFill, BsFillLightningFill } from "react-icons/bs"
+import { BsPersonFill, BsFillLightningFill, BsBuilding } from "react-icons/bs";
 
 const SERVICE_URL = "http://localhost:8090/";
 
@@ -142,6 +142,7 @@ class AddCharacterForm extends Component {
                       title={"Organisations:"}
                       placeholder={"Select organisations..."}
                       options={allOrganisations}
+                      icon={<BsBuilding />}
                       textmuted={
                         "Navigate to the Organisations page to add a new organisation"
                       }

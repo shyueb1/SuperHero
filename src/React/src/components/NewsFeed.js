@@ -22,7 +22,8 @@ const ItemCard = ({ sighting }) => {
       <Row>
         <Card className="text-center mr-4 mt-4 ml-4 mb-4">
           <Card.Title>{sighting.hero.name}</Card.Title>
-          <Card.Text>{sighting.location == null ? "" : sighting.location.name}</Card.Text>
+          <Card.Img variant="top" src="https://wiki.tripwireinteractive.com/images/4/47/Placeholder.png" style={{ padding: 50, height: 250, width: 250 }} />
+          <Card.Text>{sighting.location == null ? "Unknown Location" : sighting.location.name}</Card.Text>
           <Card.Text>{sighting.date}</Card.Text>
         </Card>
       </Row>

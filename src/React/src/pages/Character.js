@@ -219,64 +219,33 @@ class Character extends React.Component {
 
     console.log(`Something changed in ${inputName} : ${inputValue}`);
 
-    console.log((characterInfo.inputName = inputValue));
-
     characterInfo.inputName = inputValue;
-    let superpowerID;
-    this.state.superpowers.forEach((s) => {
-      if (s.name == characterInfo.inputName) {
-        superpowerID = s.id;
-      }
-    });
-    characterInfo.superPower.id = superpowerID;
-    this.setState({ editCharacter: characterInfo });
-  };
+
+    if (characterInfo.hasOwnProperty(inputName)) {
+      characterInfo[inputName] = inputValue;
+      this.setState({ editCharacter: characterInfo });
+    }
+  }
 
   handleEditFormSubmit = (event) => {
     if (event) {
       event.preventDefault();
     }
-    let id = this.state.editCharacter.id;
-    console.log(`Submitting edit for character ID: ${id}`);
-    console.log(this.state.editCharacter);
-    let subMission = {
-      id: this.state.editCharacter.id,
-      name: this.state.editCharacter.name,
-      description: this.state.editCharacter.description,
-      superPower: {
-        id: this.state.editCharacter.superPower.id,
-      },
 
-      inOrganisation: null,
-      isVillain: this.state.editCharacter.villain == "false" ? false : true,
-    };
-    let superpowerSubmission = {
-      id: this.state.editCharacter.id,
-      superPower: { id: this.state.editCharacter.superPower.id },
-    };
-    console.log(JSON.stringify(subMission));
-    console.log(JSON.stringify(superpowerSubmission));
-    Promise.all([
-      fetch(SERVICE_URL + "hero", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(subMission),
-      }),
-      fetch(SERVICE_URL + "hero/superpower", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(superpowerSubmission),
-      }),
-    ])
-      .then(([response1, response2]) => {
-        return Promise.all([response1.json(), response2.json()]);
-      })
-      .then(([data1, data2]) => {
-        console.log("Success:", data1, data2);
+    let id = event.target.value;
+    console.log(`Submitting edit for hero ID: ${id}`);
+    console.log(this.state.editCharacter);
+
+    fetch(SERVICE_URL + "hero/" + id, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(this.state.editCharacter),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
         this.setState({ showEditModal: false });
         this.loadCharacters();
       })

@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import javax.validation.Valid;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 

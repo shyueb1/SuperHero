@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Table, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const LocationTableHeader = () => {
   return (
@@ -11,7 +12,9 @@ const LocationTableHeader = () => {
       <th>Latitude</th>
       <th>Longitude</th>
       <th></th>
-      <th></th>
+      <th>
+        <Link to="/maps"><Button>Locations on Map</Button></Link>
+      </th>
     </tr>
   );
 };

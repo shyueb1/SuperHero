@@ -73,6 +73,7 @@ public class ServiceLayerImpl implements ServiceLayer{
 
     @Override
     public void deleteSuperPowerById(int id){
+        powerRepo.removeSuperPowerFromHeroes(id);
         powerRepo.deleteById(id);
     }
 
@@ -129,7 +130,7 @@ public class ServiceLayerImpl implements ServiceLayer{
 
     @Override
     public void addHeroToOrganisation(Hero hero, Organisation organisation){
-        orgRepo.addHeroToOrganisation(hero.getId(), organisation.getId());
+        orgRepo.addHeroToOrganisation(hero, organisation);
     }
 
     @Override
@@ -172,7 +173,7 @@ public class ServiceLayerImpl implements ServiceLayer{
     public void addHeroToOrganisations(Hero hero, List<Organisation> organisations) {
         if(organisations != null && !organisations.isEmpty()){
             organisations.stream().forEach(org -> {
-                orgRepo.addHeroToOrganisation(hero.getId(), org.getId());
+                orgRepo.addHeroToOrganisation(hero, org);
             });
         }
     }

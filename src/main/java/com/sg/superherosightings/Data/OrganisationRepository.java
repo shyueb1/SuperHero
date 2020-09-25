@@ -25,8 +25,8 @@ public interface OrganisationRepository extends JpaRepository<Organisation, Inte
 
     @Transactional
     @Modifying
-    @Query(value = "INSERT INTO hero_in_organisation (hero_id, organisation_id) VALUES (:#{#heroParam}, :#{#organisationParam})", nativeQuery = true)
-    void addHeroToOrganisation(@Param("heroParam")int heroId, @Param("organisationParam") int orgId);
+    @Query(value = "INSERT INTO hero_in_organisation (hero_id, organisation_id) VALUES (:#{#heroParam.id}, :#{#organisationParam.id})", nativeQuery = true)
+    void addHeroToOrganisation(@Param("heroParam")Hero hero, @Param("organisationParam") Organisation org);
 
     @Query(value = "UPDATE organisation SET location_id=null WHERE id=:#{#organisationParam.id}", nativeQuery = true)
     void deleteLocationFromOrganisation(@Param("organisationParam") Organisation organisation);

@@ -93,9 +93,11 @@ class Character extends React.Component {
         console.log("Loading organisations");
         fetch(SERVICE_URL + "organisation")
             .then(data => data.json())
-            .then(data => this.setState(
-                { organisations: data, loading: false, allOrganisations: data.map(d => d.name) }
-            ));
+            .then(data => {
+                console.log(data);
+                this.setState(
+                    { organisations: data, loading: false, allOrganisations: data.map(d => d.name) });
+            });
     }
     handleSubmitForm = (values) => {
         let subName = values.name;
@@ -110,13 +112,14 @@ class Character extends React.Component {
         });
         let subOrg = values.inOrganisation;
         let orgId = [];
+        // console.log("SUPER POWER ID = " + superpowerId)
         let subMission = {
             "name": subName,
             "description": subDescription,
-            "superpower": {
+            "superPower": {
                 "id": superpowerId
             },
-            "isVillain": subVillain == "false" ? false : true,
+            "villain": subVillain == "false" ? false : true,
 
             "inOrganisation": orgId
         };
@@ -129,8 +132,20 @@ class Character extends React.Component {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log("Success:", data);
-                this.loadCharacters();
+                let updatedPower;
+                this.state.superpowers.forEach(power => {
+                    if (power.name === subSuperpower) {
+                        updatedPower = power.name;
+                    }
+                });
+
+                subMission.superPower = {
+                    "name": updatedPower
+                };
+                subMission.id = data.id;
+                subMission.villain = subMission.isVillain;
+                this.setState({ characters: [...this.state.characters, subMission] })
+                // this.loadCharacters();
             })
             .catch((error) => {
                 console.log("Error:", error);
@@ -143,9 +158,11 @@ class Character extends React.Component {
         console.log("Loading characters");
         fetch(SERVICE_URL + "hero")
             .then(data => data.json())
-            .then(data => this.setState(
-                { characters: data, loading: false }
-            ));
+            .then(data => {
+                this.setState({ characters: data, loading: false });
+                console.log(data);
+            });
+
     }
 
     handleDeleteCharacter = (event) => {
@@ -176,7 +193,6 @@ class Character extends React.Component {
         fetch(SERVICE_URL + "/hero/" + id)
             .then((response) => response.json())
             .then((data) => {
-                console.log("Success:", data);
                 this.setState({ editCharacter: data, showEditModal: true });
             })
             .catch((error) => {
@@ -210,7 +226,7 @@ class Character extends React.Component {
         console.log(`Submitting edit for character ID: ${id}`);
         console.log(this.state.editCharacter);
 
-        fetch(SERVICE_URL + "/hero/" + id, {
+        fetch(SERVICE_URL + "/hero", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

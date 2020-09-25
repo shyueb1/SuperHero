@@ -89,11 +89,11 @@ public class HeroRepoTest {
 
         heroRepo.save(heroA);
         heroRepo.save(heroB);
-        orgRepo.addHeroToOrganisation(heroA.getId(), savedOrg.getId());
+        orgRepo.addHeroToOrganisation(heroA, savedOrg);
 
         assertTrue(!heroRepo.findByOrganisation(savedOrg).isEmpty() && heroRepo.findByOrganisation(savedOrg).get(0).equals(heroA));
 
-        orgRepo.addHeroToOrganisation(heroB.getId(), savedOrg.getId());
+        orgRepo.addHeroToOrganisation(heroB, savedOrg);
         assertTrue(heroRepo.findByOrganisation(savedOrg).size() == 2 && heroRepo.findByOrganisation(savedOrg).get(1).equals(heroB));
     }
 

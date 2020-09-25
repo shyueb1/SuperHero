@@ -110,7 +110,7 @@ public class Organisation {
         return id == that.id &&
                 name.equals(that.name) &&
                 description.equals(that.description) &&
-                telephone.equals(that.telephone);
+                telephone == that.telephone;
     }
 
     @Override

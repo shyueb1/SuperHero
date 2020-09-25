@@ -20,6 +20,6 @@ public interface SuperPowerRepository extends JpaRepository<SuperPower, Integer>
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE hero SET superpower_id=null WHERE superpower_id=:#{#powerId}", nativeQuery = true)
-    void removeSuperPowerFromHeroes(@Param("powerId") int id);
+    @Query(value = "UPDATE hero SET superpower_id=null WHERE superpower_id=:powerid", nativeQuery = true)
+    void removeSuperPowerFromHeroes(@Param("powerid") int id);
 }

@@ -130,7 +130,11 @@ public class ServiceLayerImpl implements ServiceLayer{
 
     @Override
     public void addHeroToOrganisation(Hero hero, Organisation organisation){
-        orgRepo.addHeroToOrganisation(hero, organisation);
+        List<Organisation> heroOrgs = orgRepo.findByHero(hero);
+        if(heroOrgs.stream().filter(org -> org.getId() == organisation.getId()).count() == 0){
+            orgRepo.addHeroToOrganisation(hero, organisation);
+        }
+
     }
 
     @Override

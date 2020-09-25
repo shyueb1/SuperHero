@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @EnableJpaRepositories("com.sg.superherosightings.Data")
 @SpringBootApplication
-public class SuperherosightingsApplication {
+public class SuperHeroSightingsApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(SuperherosightingsApplication.class, args);
+		SpringApplication.run(SuperHeroSightingsApplication.class, args);
 	}
 
 }

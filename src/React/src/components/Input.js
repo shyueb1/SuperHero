@@ -4,7 +4,7 @@ const Input = (props) => {
   return (
     <div className="form-group">
       <label htmlFor={props.name} className="form-label">
-        {props.title}
+        {props.icon} {props.title}
       </label>
       <br />
       <input

@@ -81,6 +81,9 @@ class AddSightingForm extends Component {
                       title={"Hero or Villain:"}
                       placeholder={"Select a hero or villain..."}
                       options={allCharacters}
+                      textmuted={
+                        "Navigate to the Superheroes and Supervillains page to add a new hero or villain"
+                      }
                     />
                     <Alert show={!errors.hero == ""} variant={"danger"}>
                       {errors.hero && touched.hero && errors.hero}
@@ -92,6 +95,9 @@ class AddSightingForm extends Component {
                       title={"Location:"}
                       placeholder={"Select a location..."}
                       options={allLocations}
+                      textmuted={
+                        "Navigate to the Locations page to add a new location"
+                      }
                     />
                     <Alert show={!errors.location == ""} variant={"danger"}>
                       {errors.location && touched.location && errors.location}

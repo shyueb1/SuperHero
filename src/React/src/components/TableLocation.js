@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Table, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { BsFillTrashFill } from "react-icons/bs"
 
 const LocationTableHeader = () => {
   return (
@@ -11,10 +12,10 @@ const LocationTableHeader = () => {
       <th>Address</th>
       <th>Latitude</th>
       <th>Longitude</th>
-      <th></th>
-      <th>
+      <th className="text-center">
         <Link to="/maps"><Button>Locations on Map</Button></Link>
       </th>
+      <th className="text-center"><BsFillTrashFill /></th>
     </tr>
   );
 };
@@ -28,12 +29,12 @@ const LocationTableRow = ({ location, toggleEdit, toggleDelete }) => {
       <td>{location.address}</td>
       <td>{location.latitude}</td>
       <td>{location.longitude}</td>
-      <td>
+      <td className="text-center">
         <Button onClick={toggleEdit} value={location.id}>
           Edit
         </Button>
       </td>
-      <td>
+      <td className="text-center">
         <Button onClick={toggleDelete} value={location.id}>
           Delete
         </Button>

@@ -25,13 +25,6 @@ class AddSightingForm extends Component {
     });
   };
 
-  handleSubmitForm = (values, { setSubmitting }) => {
-    const submission = values;
-    alert(JSON.stringify(submission, null, 2));
-    console.log("Submitted submission: " + JSON.stringify(submission));
-    setSubmitting(false);
-  };
-
   handleClearForm = (values) => {
     this.setState({
       submission: {
@@ -54,7 +47,7 @@ class AddSightingForm extends Component {
 
   render() {
     let { submission } = this.state;
-    let { allCharacters, allLocations } = this.props;
+    let { allCharacters, allLocations, submitForm } = this.props;
     return (
       <Container fluid>
         <Formik
@@ -62,7 +55,7 @@ class AddSightingForm extends Component {
           initialValues={submission}
           validate={this.handleValidateForm}
           onReset={this.handleClearForm}
-          onSubmit={this.handleSubmitForm}
+          onSubmit={submitForm}
         >
           {(formikProps) => {
             let {
@@ -136,6 +129,7 @@ class AddSightingForm extends Component {
                       type="submit"
                       disabled={isSubmitting}
                       title={"Submit"}
+                      onClick={submitForm}
                       className="mr-4 ml-2 mb-4"
                     >
                       Submit Form

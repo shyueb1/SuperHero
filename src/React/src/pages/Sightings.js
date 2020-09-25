@@ -9,6 +9,7 @@ import Sidebar from "../components/Sidebar";
 import AddSightingForm from "../components/AddSightingForm";
 import TableSighting from "../components/TableSighting";
 import EditModalSighting from "../components/EditModalSighting";
+import { ThemeConsumer } from "react-bootstrap/esm/ThemeProvider";
 
 const SERVICE_URL = "http://localhost:8090/";
 
@@ -16,6 +17,7 @@ class Sightings extends React.Component {
   state = {
     loading: false,
     showEditModal: false,
+    updatedSightingId: "",
     sightings: [
       {
         id: 9,
@@ -70,6 +72,7 @@ class Sightings extends React.Component {
 
     characters: [
       {
+        id: "",
         name: "Bob",
         description: "A great super hero",
         superPower: {
@@ -84,6 +87,7 @@ class Sightings extends React.Component {
 
     locations: [
       {
+        id: "",
         name: "London",
         description: "Unpredictable weather",
         address: "UK",
@@ -223,6 +227,48 @@ class Sightings extends React.Component {
       });
   };
 
+  handleSubmitForm = (values) => {
+    console.log("submit starting");
+    let subhero = values.hero;
+    let heroId;
+    this.state.characters.forEach(c => {
+      if (c.name == subhero) {
+        heroId = c.id;
+      }
+    });
+    let sublocation = values.location;
+    let locationId;
+    this.state.locations.forEach(l => {
+      if (l.name == sublocation) {
+        locationId = l.id;
+      };
+    });
+    let subMission = {
+      "hero": {
+        "id": heroId,
+      },
+      "location": {
+        "id": locationId,
+      },
+      "date": values.date
+    };
+    console.log(subMission);
+    fetch(SERVICE_URL + '/sighting', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(subMission),
+    })
+      .then((response) => response.json())
+      .then(data => {
+        this.loadSightings();
+      })
+      .catch(error => {
+        console.log("Error:", error);
+      });
+  };
+
   render() {
     return (
       <Container fluid style={{ padding: 0 }}>
@@ -238,6 +284,7 @@ class Sightings extends React.Component {
               <AddSightingForm
                 allLocations={this.state.allLocations}
                 allCharacters={this.state.allCharacters}
+                submitForm={this.handleSubmitForm}
               />
             </Row>
             <Row>

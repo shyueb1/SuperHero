@@ -68,11 +68,27 @@ class Superpower extends Component {
     console.log("submission form cleared");
   };
 
-  handleSubmitForm = (values, { setSubmitting }) => {
-    const submission = values;
-    alert(JSON.stringify(submission, null, 2));
-    console.log("submitted submission: " + JSON.stringify(submission));
-    setSubmitting(false);
+  handleSubmitForm = (values) => {
+    let subName = values.name;
+    let subDescription = values.description;
+    let subMission = {
+      "name": subName,
+      "description": subDescription
+    };
+    fetch(SERVICE_URL + "/superpower", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(subMission),
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.loadSuperpowers();
+      })
+      .catch(error => {
+        console.log("Error: ", error);
+      });
   };
 
   handleEditFormSubmit = (event) => {

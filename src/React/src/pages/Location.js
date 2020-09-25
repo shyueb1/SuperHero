@@ -80,11 +80,28 @@ class Location extends Component {
     console.log("submission form cleared");
   };
 
-  handleSubmitForm = (values, { setSubmitting }) => {
-    const submission = values;
-    alert(JSON.stringify(submission, null, 2));
-    console.log("submitted submission: " + JSON.stringify(submission));
-    setSubmitting(false);
+  handleSubmitForm = (values) => {
+    let subMission = {
+      "name": values.name,
+      "description": values.description,
+      "address": values.address,
+      "latitude": values.latitude,
+      "longitude": values.longitude
+    };
+    fetch(SERVICE_URL + "/location", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(subMission),
+    })
+      .then(response => response.json())
+      .then(data => {
+        this.loadLocations();
+      })
+      .catch(error => {
+        console.log("Error:", error);
+      });
   };
 
   handleEditModalOpen = (event) => {

@@ -1,48 +1,48 @@
 import React, { Component } from "react";
 
 import { Form, Button, Modal } from "react-bootstrap";
+import DatePicker from "react-datepicker";
+import moment from "moment";
 
-class EditModalOrganisation extends Component {
+class EditModalSighting extends Component {
   render() {
     let {
-      organisation,
+      sighting,
       showModal,
       handleClose,
       handleChange,
       handleSubmit,
       allLocations,
+      allCharacters,
     } = this.props;
     return (
       <Modal show={showModal} onHide={handleClose} animation={false}>
         <Modal.Dialog>
           <Modal.Header closeButton>
-            <Modal.Title># {organisation.id}</Modal.Title>
+            <Modal.Title># {sighting.id}</Modal.Title>
           </Modal.Header>
         </Modal.Dialog>
 
         <Modal.Body>
           <Form>
-            <Form.Group controlId="organisationName">
-              <Form.Label>Name:</Form.Label>
+            <Form.Group controlId="heroName">
+              <Form.Label>Hero:</Form.Label>
               <Form.Control
-                type="text"
-                placeholder="Enter name.."
-                name="name"
-                value={organisation.name}
+                as="select"
+                name="hero"
+                defaultValue="Select hero..."
+                value={sighting.hero}
                 onChange={handleChange}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="description">
-              <Form.Label>Description:</Form.Label>
-              <Form.Control
-                type="textarea"
-                rows="2"
-                placeholder="Organisation description.."
-                name="description"
-                value={organisation.description}
-                onChange={handleChange}
-              />
+              >
+                <option>Select hero...</option>
+                {allCharacters.map((x) => (
+                  <option>{x}</option>
+                ))}
+              </Form.Control>
+              <Form.Text className="text-muted">
+                Navigate to the Superheroes/Supervillains page to add a new
+                character
+              </Form.Text>
             </Form.Group>
 
             <Form.Group controlId="location">
@@ -51,7 +51,7 @@ class EditModalOrganisation extends Component {
                 as="select"
                 name="location"
                 defaultValue="Select location..."
-                value={organisation.location}
+                value={sighting.location}
                 onChange={handleChange}
               >
                 <option>Select location...</option>
@@ -64,15 +64,14 @@ class EditModalOrganisation extends Component {
               </Form.Text>
             </Form.Group>
 
-            <Form.Group controlId="telephone">
-              <Form.Label>Telephone:</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter telephone.."
-                name="telephone"
-                value={organisation.telephone}
+            <Form.Group controlId="date">
+              <Form.Label>Date:</Form.Label>
+              {/* <Form.control
+                type="date"
+                name="dob"
                 onChange={handleChange}
-              />
+                dateFormat={"yyyy/MM/dd"}
+              /> */}
             </Form.Group>
 
             <Modal.Footer>
@@ -89,4 +88,4 @@ class EditModalOrganisation extends Component {
     );
   }
 }
-export default EditModalOrganisation;
+export default EditModalSighting;

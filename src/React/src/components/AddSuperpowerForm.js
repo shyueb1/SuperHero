@@ -30,8 +30,10 @@ class AddSuperpowerForm extends Component {
             return (
               <form onSubmit={handleSubmit}>
                 <Row>
+                  <h2 className="mr-4 ml-2 mb-4">Add a Superpower</h2>
+                </Row>
+                <Row>
                   <Col sm={6}>
-                    <h2>Add a Superpower</h2>
                     <Input
                       name={"name"}
                       value={values.name}

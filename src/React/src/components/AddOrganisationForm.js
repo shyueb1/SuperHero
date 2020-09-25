@@ -68,12 +68,6 @@ class AddOrganisationForm extends Component {
     newObject.location = { id: locationId };
     this.setState({ submission: newObject });
   };
-  //  this.setState(prevState => {
-  //     return {
-  //    submission.location.id: prevState.submission.location.locationId
-  //     }
-  // }
-  // )
 
   render() {
     let { submission } = this.state;
@@ -100,8 +94,10 @@ class AddOrganisationForm extends Component {
             return (
               <form onSubmit={handleSubmit}>
                 <Row>
+                  <h2 className="mr-4 ml-2 mb-4">Add a Location</h2>
+                </Row>
+                <Row>
                   <Col sm={6}>
-                    <h2>Add an Organisation</h2>
                     <Input
                       name={"name"}
                       value={values.name}
@@ -128,64 +124,56 @@ class AddOrganisationForm extends Component {
                         errors.description}
                     </Alert>
                   </Col>
+
                   <Col sm={6}>
                     <Row>
-                      <Col>
-                        <Select
-                          name={"location"}
-                          value={values.location}
-                          onChange={this.handleLocationChange}
-                          onChange={handleChange}
-                          title={"Location:"}
-                          placeholder={"Select a location..."}
-                          options={allLocations}
-                        />
-                        <Alert show={!errors.location == ""} variant={"danger"}>
-                          {errors.location &&
-                            touched.location &&
-                            errors.location}
-                        </Alert>
-                      </Col>
-                      <Col>
-                        <Input
-                          name={"telephone"}
-                          value={values.telephone}
-                          onChange={handleChange}
-                          type={"text"}
-                          title={"Telephone"}
-                          placeholder={"Enter telephone..."}
-                        />
-                        <Alert
-                          show={!errors.telephone == ""}
-                          variant={"danger"}
-                        >
-                          {errors.telephone &&
-                            touched.telephone &&
-                            errors.telephone}
-                        </Alert>
-                      </Col>
-                    </Row>
-                    <br />
-                    <Row className="justify-content-md-center">
-                      <Button
-                        type="reset"
-                        onClick={handleReset}
-                        title={"Clear"}
-                        className="mr-4 ml-4 mt-2 mb-4"
-                      >
-                        Clear Form
-                      </Button>
-                      <Button
-                        type="submit"
-                        disabled={isSubmitting}
-                        title={"Submit"}
-                        className="mr-4 ml-4 mt-2 mb-4"
-                        onClick={handleSubmit}
-                      >
-                        Submit Form
-                      </Button>
+                      <Select
+                        name={"location"}
+                        value={values.location}
+                        onChange={this.handleLocationChange}
+                        onChange={handleChange}
+                        title={"Location:"}
+                        placeholder={"Select a location..."}
+                        options={allLocations}
+                      />
+                      <Alert show={!errors.location == ""} variant={"danger"}>
+                        {errors.location && touched.location && errors.location}
+                      </Alert>
+                      <Input
+                        name={"telephone"}
+                        value={values.telephone}
+                        onChange={handleChange}
+                        type={"text"}
+                        title={"Telephone"}
+                        placeholder={"Enter telephone..."}
+                      />
+                      <Alert show={!errors.telephone == ""} variant={"danger"}>
+                        {errors.telephone &&
+                          touched.telephone &&
+                          errors.telephone}
+                      </Alert>
+                      <br />
                     </Row>
                   </Col>
+                </Row>
+                <Row>
+                  <Button
+                    type="reset"
+                    onClick={handleReset}
+                    title={"Clear"}
+                    className="mr-4 ml-4 mb-4"
+                  >
+                    Clear Form
+                  </Button>
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    title={"Submit"}
+                    className="mr-4 ml-4 mb-4"
+                    onClick={handleSubmit}
+                  >
+                    Submit Form
+                  </Button>
                 </Row>
               </form>
             );

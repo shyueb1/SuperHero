@@ -29,6 +29,9 @@ class AddLocationForm extends Component {
             return (
               <form onSubmit={handleSubmit}>
                 <Row>
+                  <h2 className="mr-4 ml-2 mb-4">Add a Location</h2>
+                </Row>
+                <Row>
                   <Col sm={6}>
                     <Input
                       name={"name"}
@@ -97,7 +100,7 @@ class AddLocationForm extends Component {
                     type="reset"
                     onClick={handleReset}
                     title={"Clear"}
-                    className="mr-2 ml-2 mb-4"
+                    className="mr-4 ml-4 mb-4"
                   >
                     Clear Form
                   </Button>
@@ -105,7 +108,7 @@ class AddLocationForm extends Component {
                     type="submit"
                     disabled={isSubmitting}
                     title={"Submit"}
-                    className="mr-2 ml-2 mb-4"
+                    className="mr-4 ml-4 mb-4"
                   >
                     Submit Form
                   </Button>

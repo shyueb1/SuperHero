@@ -70,8 +70,12 @@ class AddCharacterForm extends Component {
             return (
               <form onSubmit={handleSubmit}>
                 <Row>
+                  <h2 className="mr-4 ml-2 mb-4">
+                    Add a Superhero or Supervillain
+                  </h2>
+                </Row>
+                <Row>
                   <Col sm={7}>
-                    <h2>Add a Superhero or Supervillain</h2>
                     <Input
                       name={"name"}
                       value={values.name}
@@ -156,7 +160,7 @@ class AddCharacterForm extends Component {
                     type="reset"
                     onClick={handleReset}
                     title={"Clear"}
-                    className="mr-4 ml-4 mt-2 mb-4"
+                    className="mr-4 ml-4 mb-4"
                   >
                     Clear Form
                   </Button>
@@ -164,7 +168,7 @@ class AddCharacterForm extends Component {
                     type="submit"
                     disabled={isSubmitting}
                     title={"Submit"}
-                    className="mr-4 ml-4 mt-2 mb-4"
+                    className="mr-4 ml-4 mb-4"
                     onClick={handleSubmit}
                   >
                     Submit Form

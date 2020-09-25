@@ -68,7 +68,7 @@ public class ServiceLayerImpl implements ServiceLayer{
 
     @Override
     public void deleteSightingById(int id){
-        sightRepo.deleteById(id);
+        sightRepo.deleteBySightingId(id);
     }
 
     @Override

@@ -4,9 +4,11 @@ import com.sg.superherosightings.Entity.JPAEntities.Hero;
 import com.sg.superherosightings.Entity.JPAEntities.Location;
 import com.sg.superherosightings.Entity.JPAEntities.Sighting;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,5 +33,11 @@ public interface SightingRepository extends JpaRepository<Sighting, Integer> {
 
     @Query(value = "UPDATE sighting SET location_id=:#{#location.id} WHERE id=:#{#sighting.id}", nativeQuery = true)
     void addLocationToSighting(@Param("sighting") Sighting sight, @Param("location") Location location);
+
+
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM sighting WHERE id=:sightid", nativeQuery = true)
+    void deleteBySightingId(@Param("sightid") int id);
 }
 

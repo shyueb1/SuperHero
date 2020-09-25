@@ -51,6 +51,6 @@ CREATE TABLE sighting (
     hero_id int,
     location_id int,
     date_of_sighting date NOT NULL,
-    CONSTRAINT fk_hero_id_sighting FOREIGN KEY (hero_id) REFERENCES hero(id) ON DELETE CASCADE,
-    CONSTRAINT fk_location_id_sighting FOREIGN KEY (location_id) REFERENCES location(id) ON DELETE CASCADE
+    CONSTRAINT fk_hero_id_sighting FOREIGN KEY (hero_id) REFERENCES hero(id),
+    CONSTRAINT fk_location_id_sighting FOREIGN KEY (location_id) REFERENCES location(id)
 );

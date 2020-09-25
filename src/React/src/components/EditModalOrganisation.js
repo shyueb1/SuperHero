@@ -1,78 +1,75 @@
 import React, { Component } from "react";
+
 import { Form, Button, Modal } from "react-bootstrap";
 
-class EditModalLocation extends Component {
+class EditModalOrganisation extends Component {
   render() {
     let {
-      location,
+      organisation,
       showModal,
       handleClose,
       handleChange,
       handleSubmit,
+      allLocations,
     } = this.props;
     return (
       <Modal show={showModal} onHide={handleClose} animation={false}>
         <Modal.Dialog>
           <Modal.Header closeButton>
-            <Modal.Title># {location.id}</Modal.Title>
+            <Modal.Title># {organisation.id}</Modal.Title>
           </Modal.Header>
         </Modal.Dialog>
 
         <Modal.Body>
           <Form>
-            <Form.Group controlId="locationName">
+            <Form.Group controlId="organisationName">
               <Form.Label>Name:</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Enter name..."
+                placeholder="Enter name.."
                 name="name"
-                value={location.name}
+                value={organisation.name}
                 onChange={handleChange}
               />
             </Form.Group>
 
-            <Form.Group controlId="locationDescription">
+            <Form.Group controlId="description">
               <Form.Label>Description:</Form.Label>
               <Form.Control
                 type="textarea"
                 rows="2"
-                placeholder="Describe location..."
+                placeholder="Organisation description.."
                 name="description"
-                value={location.description}
+                value={organisation.description}
                 onChange={handleChange}
               />
             </Form.Group>
-
-            <Form.Group controlId="locationAddress">
-              <Form.Label>Address:</Form.Label>
+            <Form.Group controlId="location">
+              <Form.Label>Location:</Form.Label>
               <Form.Control
-                type="textarea"
-                rows="2"
-                placeholder="Enter address..."
-                name="address"
-                value={location.address}
+                as="select"
+                name="location"
+                defaultValue="Select location..."
+                value={organisation.location}
                 onChange={handleChange}
-              />
+              >
+                <option>Select location...</option>
+                {allLocations.map((x) => (
+                  <option>{x}</option>
+                ))}
+              </Form.Control>
+              <Form.Text className="text-muted">
+                Navigate to the Locations page to add a new location
+              </Form.Text>
             </Form.Group>
 
-            <Form.Group controlId="locationLatitude">
-              <Form.Label>Latitude:</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Enter latitude... "
-                name="latitude"
-                value={location.latitude}
-                onChange={handleChange}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="locationLongitude">
-              <Form.Label>Longitude:</Form.Label>
+            <Form.Group controlId="telephone">
+              <Form.Label>Telephone:</Form.Label>
               <Form.Control
                 type="number"
-                placeholder="Enter longitude... "
-                name="longitude"
-                value={location.longitude}
+                placeholder="Enter telephone.."
+                name="telephone"
+                value={organisation.telephone}
                 onChange={handleChange}
               />
             </Form.Group>
@@ -91,4 +88,4 @@ class EditModalLocation extends Component {
     );
   }
 }
-export default EditModalLocation;
+export default EditModalOrganisation;

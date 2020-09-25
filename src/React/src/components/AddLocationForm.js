@@ -60,31 +60,34 @@ class AddLocationForm extends Component {
                     <Row>
                       <TextArea
                         name={"address"}
-                        value={values.name}
+                        value={values.address}
                         onChange={handleChange}
                         type={"text"}
                         title={"Address"}
                         placeholder={"Enter address..."}
                         cols={50}
                         rows={3}
+                        textmuted={"E.g. 28 Wall Street, New York, USA"}
                       />
                     </Row>
                     <Row>
                       <Input
                         name={"latitude"}
-                        value={values.name}
+                        value={values.latitude}
                         onChange={handleChange}
                         type={"number"}
                         title={"Latitude"}
                         placeholder={"Enter latitude..."}
+                        textmuted={"Range: -90 to 90"}
                       />
                       <Input
                         name={"longitude"}
-                        value={values.name}
+                        value={values.longitude}
                         onChange={handleChange}
                         type={"number"}
                         title={"Longitude"}
                         placeholder={"Enter longitude..."}
+                        textmuted={"Range: -180 to 180"}
                       />
                     </Row>
                   </Col>
@@ -92,7 +95,7 @@ class AddLocationForm extends Component {
                 <Row className="justify-content">
                   <Button
                     type="reset"
-                    action={handleReset}
+                    onClick={handleReset}
                     title={"Clear"}
                     className="mr-2 ml-2 mb-4"
                   >

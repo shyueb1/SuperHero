@@ -7,12 +7,14 @@ import Footer from "../components/Footer";
 import Sidebar from "../components/Sidebar";
 import AddLocationFrom from "../components/AddLocationForm";
 import TableLocation from "../components/TableLocation";
+import EditModalLocation from "../components/EditModalLocation";
 
-const SERVICE_URL = "http://localhost:8090";
+const SERVICE_URL = "http://localhost:8090/";
 
 class Location extends Component {
   state = {
     isLoading: false,
+    showEditModal: false,
     locations: [
       {
         id: 1,
@@ -27,8 +29,16 @@ class Location extends Component {
       name: "",
       description: "",
       address: "",
-      latitude: undefined,
-      longitude: undefined,
+      latitude: 0.0,
+      longitude: 0.0,
+    },
+    editLocation: {
+      id: 99,
+      name: "Edit Street Fake ",
+      description: "Edit Fake description",
+      address: "Fake address",
+      latitude: 50.21,
+      longitude: -0.13,
     },
   };
 
@@ -63,8 +73,8 @@ class Location extends Component {
         name: "",
         description: "",
         address: "",
-        latitude: undefined,
-        longitude: undefined,
+        latitude: 0.0,
+        longitude: 0.0,
       },
     });
     console.log("submission form cleared");
@@ -75,6 +85,90 @@ class Location extends Component {
     alert(JSON.stringify(submission, null, 2));
     console.log("submitted submission: " + JSON.stringify(submission));
     setSubmitting(false);
+  };
+
+  handleEditModalOpen = (event) => {
+    console.log("Opening Edit Modal");
+    if (event) {
+      event.preventDefault();
+    }
+    let id = event.target.value;
+    console.log(`Editing location ID: ${id}`);
+
+    fetch(SERVICE_URL + "/location/" + id)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        this.setState({ editLocation: data, showEditModal: true });
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+  };
+
+  handleEditModalClose = (event) => {
+    console.log("Closing Edit Modal");
+    this.setState({ showEditModal: false });
+  };
+
+  handleEditFormChange = (event) => {
+    let inputName = event.target.name;
+    let inputValue = event.target.value;
+    let locationInfo = this.state.editLocation;
+
+    console.log(`Something changed in ${inputName} : ${inputValue}`);
+
+    if (locationInfo.hasOwnProperty(inputName)) {
+      locationInfo[inputName] = inputValue;
+      this.setState({ editLocation: locationInfo });
+    }
+  };
+
+  handleEditFormSubmit = (event) => {
+    if (event) {
+      event.preventDefault();
+    }
+    let id = event.target.value;
+    console.log(`Submitting edit for location ID: ${id}`);
+    console.log(this.state.editLocation);
+
+    fetch(SERVICE_URL + "location/" + id, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(this.state.editLocation),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        this.setState({ showEditModal: false });
+        this.loadLocations();
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+  };
+
+  handleDeleteLocation = (event) => {
+    if (event) {
+      event.preventDefault();
+    }
+    let locationId = event.target.value;
+    console.log(`Submitting delete for location id ${locationId}`);
+    fetch(SERVICE_URL + "location", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: locationId }),
+    })
+      .then((data) => {
+        this.loadLocations();
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+      });
   };
 
   render() {
@@ -96,12 +190,24 @@ class Location extends Component {
                 submitForm={this.handleSubmitForm}
               />
             </Row>
+            <hr />
             <Row>
-              <TableLocation locations={this.state.locations} />
+              <TableLocation
+                locations={this.state.locations}
+                handleEdit={this.handleEditModalOpen}
+                handleDelete={this.handleDeleteLocation}
+              />
             </Row>
           </Col>
         </Row>
 
+        <EditModalLocation
+          location={this.state.editLocation}
+          showModal={this.state.showEditModal}
+          handleClose={this.handleEditModalClose}
+          handleChange={this.handleEditFormChange}
+          handleSubmit={this.handleEditFormSubmit}
+        />
         <Modal.Footer>
           <Footer />
         </Modal.Footer>

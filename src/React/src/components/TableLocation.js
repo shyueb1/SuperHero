@@ -24,7 +24,7 @@ const LocationTableRow = ({ location, toggleEdit, toggleDelete }) => {
       <td>{location.description}</td>
       <td>{location.address}</td>
       <td>{location.latitude}</td>
-      <td>{location.latitude}</td>
+      <td>{location.longitude}</td>
       <td>
         <Button onClick={toggleEdit} value={location.id}>
           Edit

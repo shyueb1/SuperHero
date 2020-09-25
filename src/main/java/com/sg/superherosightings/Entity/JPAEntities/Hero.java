@@ -35,6 +35,14 @@ public class Hero {
 
     public Hero(){}
 
+    public Hero(int id, String name, String description, SuperPower superpower, boolean isVillain){
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.superpower = superpower;
+        this.isVillain = isVillain;
+    }
+
     public Hero(int id, String name, String description, SuperPower superpower, boolean isVillain, List<Organisation> inOrganisation) {
         this.id = id;
         this.name = name;

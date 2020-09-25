@@ -3,21 +3,22 @@ import com.sg.superherosightings.Data.OrganisationRepository;
 import com.sg.superherosightings.Entity.JPAEntities.Hero;
 import com.sg.superherosightings.Entity.JPAEntities.Organisation;
 import com.sg.superherosightings.TestApplicationConfiguration;
-import org.aspectj.weaver.ast.Or;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = TestApplicationConfiguration.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class OrganisationRepoTest {
 
     @Autowired
@@ -30,6 +31,14 @@ public class OrganisationRepoTest {
     public void clearDB(){
         orgRepo.deleteHeroOrganisationBridge();
         orgRepo.deleteAll();
+        heroRepo.deleteAll();
+    }
+
+    @AfterAll
+    public void clearDBAfter(){
+        orgRepo.deleteHeroOrganisationBridge();
+        orgRepo.deleteAll();
+        heroRepo.deleteAll();
     }
 
     @Test
@@ -60,8 +69,8 @@ public class OrganisationRepoTest {
 
         System.out.println(savedOrg.toString());
         System.out.println(orgRepo.findById(savedOrg.getId()).get().toString());
-        assertTrue(orgRepo.findById(savedOrg.getId()).get().equals(savedOrg));
-        assertTrue(orgRepo.findById(savedOrg2.getId()).get().equals(savedOrg2));
+        assertTrue(orgRepo.findById(savedOrg.getId()).get().getId() == savedOrg.getId());
+        assertTrue(orgRepo.findById(savedOrg2.getId()).get().getId() == savedOrg2.getId());
 
         orgRepo.deleteAll();
         orgRepo.deleteAll();
@@ -70,39 +79,62 @@ public class OrganisationRepoTest {
 
     }
 
-//    @Test
-//    public void findByOrganisationTest(){
-//        Organisation organisation = new Organisation();
-//        organisation.setMembers(new ArrayList<Hero>());
-//        organisation.setDescription("desc");
-//        organisation.setTelephone("02323232323");
-//        organisation.setName("name");
-//        organisation.setLocation(null);
-//
-//        Hero heroA = new Hero();
-//        Hero heroB = new Hero();
-//        heroA.setName("heroA");
-//        heroB.setName("heroB");
-//        heroA.setDescription("First hero");
-//        heroB.setDescription("Second hero");
-//        heroA.setInOrganisation(null);
-//        heroB.setInOrganisation(null);
-//        heroA.setSuperPower(null);
-//        heroB.setSuperPower(null);
-//        heroA.setVillain(true);
-//        heroA.setVillain(false);
-//
-//        Hero savedHero1 = heroRepo.save(heroA);
-//        Hero savedHero2 = heroRepo.save(heroB);
-//
-//        Organisation savedOrg = orgRepo.save(organisation);
-//        assertTrue(orgRepo.findByOrganisation(savedOrg).isEmpty());
-//
-//        orgRepo.addHeroToOrganisation(savedHero1.getId(), savedOrg.getId());
-//        System.out.println(savedHero1.toString());
-//        System.out.println(orgRepo.findByOrganisation(savedOrg).get(0).toString());
-//        assertTrue(orgRepo.findByOrganisation(savedOrg).size() == 1 && orgRepo.findByOrganisation(savedOrg).get(0).equals(savedHero1));
-//        orgRepo.addHeroToOrganisation(heroB.getId(), savedOrg.getId());
-//        assertTrue(orgRepo.findByOrganisation(savedOrg).size() == 2 && orgRepo.findByOrganisation(savedOrg).get(1).equals(savedHero2));
-//    }
+    @Test
+    public void addDeleteHeroFromToOrganisation(){
+        Hero heroA = new Hero();
+        Hero heroB = new Hero();
+        heroA.setName("heroA");
+        heroB.setName("heroB");
+        heroA.setDescription("First hero");
+        heroB.setDescription("Second hero");
+        heroA.setInOrganisation(null);
+        heroB.setInOrganisation(null);
+        heroA.setSuperPower(null);
+        heroB.setSuperPower(null);
+        heroA.setVillain(true);
+        heroA.setVillain(false);
+
+        Hero storedA = heroRepo.save(heroA);
+        Hero storedB = heroRepo.save(heroB);
+
+        Organisation organisation = new Organisation();
+        Organisation organisation2 = new Organisation();
+
+        organisation.setMembers(new ArrayList<Hero>());
+        organisation.setDescription("desc");
+        organisation.setTelephone("02323232323");
+        organisation.setName("name");
+        organisation.setLocation(null);
+
+        organisation2.setMembers(new ArrayList<Hero>());
+        organisation2.setDescription("desc22");
+        organisation2.setTelephone("02323232323");
+        organisation2.setName("name22");
+        organisation2.setLocation(null);
+
+        Organisation savedOrg = orgRepo.save(organisation);
+        Organisation savedOrg2 = orgRepo.save(organisation2);
+
+        orgRepo.addHeroToOrganisation(heroA, savedOrg);
+
+        assertTrue(orgRepo.findByHero(storedA).get(0).getId() == savedOrg.getId());
+        orgRepo.deleteHeroFromOrganisation(storedA, savedOrg);
+        assertTrue(orgRepo.findByHero(storedA).isEmpty());
+
+        orgRepo.addHeroToOrganisation(heroA, savedOrg);
+        orgRepo.addHeroToOrganisation(heroB, savedOrg);
+        assertTrue(orgRepo.findByHero(storedA).get(0).getId() == savedOrg.getId());
+        assertTrue(orgRepo.findByHero(storedB).get(0).getId() == savedOrg.getId());
+
+        orgRepo.deleteHeroFromOrganisation(heroA, savedOrg);
+        orgRepo.deleteHeroFromOrganisation(heroB, savedOrg);
+        assertTrue(orgRepo.findByHero(storedA).isEmpty());
+        assertTrue(orgRepo.findByHero(storedB).isEmpty());
+
+        orgRepo.addHeroToOrganisation(heroA, savedOrg);
+        orgRepo.addHeroToOrganisation(heroA, savedOrg2);
+        assertTrue(orgRepo.findByHero(storedA).size() == 2);
+    }
+
+
 }

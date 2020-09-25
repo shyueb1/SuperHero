@@ -7,8 +7,11 @@ import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.persistence.EntityNotFoundException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 
 @ControllerAdvice
@@ -60,6 +63,20 @@ public class AppExceptionHandler {
     public ResponseEntity<Object> handleHttpMessageNotWritableException(){
         HttpStatus badRequest = HttpStatus.INTERNAL_SERVER_ERROR;
         AppException exception = new AppException("Failed to retrieve objects from database. Incorrect Id was provided.", badRequest, LocalDateTime.now());
+        return new ResponseEntity<>(exception, badRequest);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Object> handleMethodArgumentTypeMisMatchException(){
+        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        AppException exception = new AppException("Error: Missing required fields.", badRequest, LocalDateTime.now());
+        return new ResponseEntity<>(exception, badRequest);
+    }
+
+    @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
+    public ResponseEntity<Object> handleSQLIntegrityException(){
+        HttpStatus badRequest = HttpStatus.BAD_REQUEST;
+        AppException exception = new AppException("Error: Possible duplicate key or invalid fields.", badRequest, LocalDateTime.now());
         return new ResponseEntity<>(exception, badRequest);
     }
 }

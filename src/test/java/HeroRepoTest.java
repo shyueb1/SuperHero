@@ -87,14 +87,14 @@ public class HeroRepoTest {
 
         assertTrue(heroRepo.findByOrganisation(savedOrg).isEmpty());
 
-        heroRepo.save(heroA);
-        heroRepo.save(heroB);
-        orgRepo.addHeroToOrganisation(heroA, savedOrg);
+        Hero savedHeroA = heroRepo.save(heroA);
+        Hero savedHeroB = heroRepo.save(heroB);
+        orgRepo.addHeroToOrganisation(savedHeroA, savedOrg);
 
-        assertTrue(!heroRepo.findByOrganisation(savedOrg).isEmpty() && heroRepo.findByOrganisation(savedOrg).get(0).equals(heroA));
+        assertTrue(!heroRepo.findByOrganisation(savedOrg).isEmpty() && heroRepo.findByOrganisation(savedOrg).get(0).getId() == savedHeroA.getId());
 
-        orgRepo.addHeroToOrganisation(heroB, savedOrg);
-        assertTrue(heroRepo.findByOrganisation(savedOrg).size() == 2 && heroRepo.findByOrganisation(savedOrg).get(1).equals(heroB));
+        orgRepo.addHeroToOrganisation(savedHeroB, savedOrg);
+        assertTrue(heroRepo.findByOrganisation(savedOrg).size() == 2 && heroRepo.findByOrganisation(savedOrg).get(1).getId() == savedHeroB.getId());
     }
 
     @Test

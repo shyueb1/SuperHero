@@ -22,7 +22,7 @@ const ItemCard = ({ sighting }) => {
       <Row>
         <Card className="text-center mr-4 mt-4 ml-4 mb-4">
           <Card.Title>{sighting.hero.name}</Card.Title>
-          <Card.Text>{sighting.location.name}</Card.Text>
+          <Card.Text>{sighting.location == null ? "" : sighting.location.name}</Card.Text>
           <Card.Text>{sighting.date}</Card.Text>
         </Card>
       </Row>

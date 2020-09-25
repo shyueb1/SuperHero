@@ -94,7 +94,7 @@ class AddOrganisationForm extends Component {
             return (
               <form onSubmit={handleSubmit}>
                 <Row>
-                  <h2 className="mr-4 ml-2 mb-4">Add a Location</h2>
+                  <h2 className="mr-4 ml-2 mb-4">Add an Organisation</h2>
                 </Row>
                 <Row>
                   <Col sm={6}>
@@ -135,6 +135,9 @@ class AddOrganisationForm extends Component {
                         title={"Location:"}
                         placeholder={"Select a location..."}
                         options={allLocations}
+                        textmuted={
+                          "Navigate to the Locations page to add a new location"
+                        }
                       />
                       <Alert show={!errors.location == ""} variant={"danger"}>
                         {errors.location && touched.location && errors.location}

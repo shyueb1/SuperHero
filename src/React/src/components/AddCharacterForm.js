@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Input from "../components/Input";
 import Select from "../components/Select";
 import TextArea from "../components/TextArea";
+import { BsPersonFill, BsFillLightningFill } from "react-icons/bs"
 
 const SERVICE_URL = "http://localhost:8090/";
 
@@ -82,6 +83,7 @@ class AddCharacterForm extends Component {
                       onChange={handleChange}
                       type={"text"}
                       title={"Name:"}
+                      icon={<BsPersonFill />}
                       placeholder={"Enter name..."}
                     />
 
@@ -121,6 +123,7 @@ class AddCharacterForm extends Component {
                       value={values.superPower}
                       onChange={handleChange}
                       title={"Superpower:"}
+                      icon={<BsFillLightningFill />}
                       placeholder={"Select superpower..."}
                       options={allSuperpowers}
                       textmuted={

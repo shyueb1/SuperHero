@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Table, Button } from "react-bootstrap";
+import { BsFillTrashFill } from "react-icons/bs"
 
 const SightingTableHeader = () => {
   return (
@@ -9,7 +10,7 @@ const SightingTableHeader = () => {
       <th>Location</th>
       <th>Date</th>
       <th></th>
-      <th></th>
+      <th className="text-center"><BsFillTrashFill /></th>
     </tr>
   );
 };
@@ -21,12 +22,12 @@ const SightingTableRow = ({ sighting, toggleEdit, toggleDelete }) => {
       <td>{sighting.hero.name}</td>
       <td>{sighting.location === null ? "N/A" : sighting.location.name}</td>
       <td>{sighting.date}</td>
-      <td>
+      <td className="text-center">
         <Button onClick={toggleEdit} value={sighting.id}>
           Edit
         </Button>
       </td>
-      <td>
+      <td className="text-center">
         <Button onClick={toggleDelete} value={sighting.id}>
           Delete
         </Button>

@@ -91,13 +91,6 @@ class AddSightingForm extends Component {
                                     }
                                 });
                                 let sightingDate = new Date(this.state.date).toISOString();
-                                // let sightingDateMonth = sightingDate.getMonth().length === 1 ? "0" + sightingDate.getMonth() : sightingDate.getMonth();
-                                // let sightingDateDay = sightingDate.getDay().length === 1 ? "0" + sightingDate.getDay() : sightingDate.getDay();
-                                // heroDate = sightingDate.getFullYear()
-                                //     + "-" + sightingDateMonth
-                                //     + "-" + sightingDateDay;
-
-                                console.log(sightingDate);
                                 fetch(SERVICE_URL + 'sighting', {
                                     method: "POST",
                                     headers: {

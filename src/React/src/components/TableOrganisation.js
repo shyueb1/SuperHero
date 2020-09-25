@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Table, Button } from "react-bootstrap";
+import { BsFillTrashFill } from "react-icons/bs"
 
 const OrganisationTableHeader = () => {
     return (
@@ -10,7 +11,7 @@ const OrganisationTableHeader = () => {
             <th>Location</th>
             <th>Telephone</th>
             <th></th>
-            <th></th>
+            <th className="text-center"><BsFillTrashFill /></th>
         </tr>
     );
 };
@@ -23,12 +24,12 @@ const OrganisationTableRow = ({ organisation, toggleEdit, toggleDelete }) => {
             <td>{organisation.description}</td>
             <td>{organisation.location === null ? "Unknown" : organisation.location.name}</td>
             <td>{organisation.telephone}</td>
-            <td>
+            <td className="text-center">
                 <Button onClick={toggleEdit} value={organisation.id}>
                     Edit
         </Button>
             </td>
-            <td>
+            <td className="text-center">
                 <Button onClick={toggleDelete} value={organisation.id}>
                     Delete
         </Button>

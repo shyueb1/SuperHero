@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Table, Button } from "react-bootstrap";
+import { BsFillTrashFill } from "react-icons/bs"
 
 const CharacterTableHeader = () => {
     return (
@@ -10,7 +11,7 @@ const CharacterTableHeader = () => {
             <th>Villain</th>
             <th>Superpower</th>
             <th></th>
-            <th></th>
+            <th className="text-center"><BsFillTrashFill /></th>
         </tr>
     );
 };
@@ -23,12 +24,12 @@ const CharacterTableRow = ({ character, toggleEdit, toggleDelete }) => {
             <td>{character.description}</td>
             <td>{character.villain === true ? "True" : "False"}</td>
             <td>{character.superPower === null ? "N/A" : character.superPower.name}</td>
-            <td>
+            <td className="text-center">
                 <Button onClick={toggleEdit} value={character.id}>
                     Edit
         </Button>
             </td>
-            <td>
+            <td className="text-center">
                 <Button onClick={toggleDelete} value={character.id}>
                     Delete
         </Button>

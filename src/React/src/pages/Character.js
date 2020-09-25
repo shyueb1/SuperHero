@@ -229,20 +229,46 @@ class Character extends React.Component {
     if (event) {
       event.preventDefault();
     }
-    let id = event.target.value;
+    let id = this.state.editCharacter.id;
     console.log(`Submitting edit for character ID: ${id}`);
     console.log(this.state.editCharacter);
-
-    fetch(SERVICE_URL + "/hero", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    let subMission = {
+      id: this.state.editCharacter.id,
+      name: this.state.editCharacter.name,
+      description: this.state.editCharacter.description,
+      superPower: {
+        id: this.state.editCharacter.superPower.id,
       },
-      body: JSON.stringify(this.state.editCharacter),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
+
+      inOrganisation: null,
+      isVillain: this.state.editCharacter.villain == "false" ? false : true,
+    };
+    let superpowerSubmission = {
+      id: this.state.editCharacter.id,
+      superPower: { id: this.state.editCharacter.superPower.id },
+    };
+
+    Promise.all([
+      fetch(SERVICE_URL + "hero", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(subMission),
+      }),
+      fetch(SERVICE_URL + "hero/superpower", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(superpowerSubmission),
+      }),
+    ])
+      .then(([response1, response2]) => {
+        return Promise.all([response1.json(), response2.json()]);
+      })
+      .then(([data1, data2]) => {
+        console.log("Success:", data1, data2);
         this.setState({ showEditModal: false });
         this.loadCharacters();
       })
@@ -250,6 +276,7 @@ class Character extends React.Component {
         console.log("Error:", error);
       });
   };
+
 
   render() {
     return (

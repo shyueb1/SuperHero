@@ -227,7 +227,14 @@ class Sightings extends React.Component {
       });
   };
 
-  handleSubmitForm = (values) => {
+  handleForm = (event) => {
+    event.preventDefault();
+  }
+
+  handleSubmitForm = (values, event) => {
+    if (event) {
+      event.preventDefault();
+    }
     console.log("submit starting");
     let subhero = values.hero;
     let heroId;

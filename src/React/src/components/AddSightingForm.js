@@ -19,7 +19,7 @@ class AddSightingForm extends Component {
     allLocations: [],
   };
 
-  handleChange = (date) => {
+  handleDateChange = (date) => {
     this.setState({
       date: date,
     });
@@ -68,7 +68,7 @@ class AddSightingForm extends Component {
               isSubmitting,
             } = formikProps;
             return (
-              <form onSubmit={handleSubmit}>
+              <form addEventListener={('submit', this.props.handleForm)} onSubmit={(e) => handleSubmit(this.state.submission, e)}>
                 <Row>
                   <h2 className="mr-4 ml-2 mb-4">Add a Sighting</h2>
                 </Row>
@@ -104,7 +104,7 @@ class AddSightingForm extends Component {
                     <Row>
                       <DatePicker
                         selected={this.state.date}
-                        onChange={this.handleChange}
+                        onChange={this.handleDateChange}
                         dateFormat={"yyyy/MM/dd"}
                         filterDate={(date) => {
                           return moment() > date;
